@@ -80,6 +80,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensor.vb" />
     <Compile Include="frmEntradas.Designer.vb">
       <DependentUpon>frmEntradas.vb</DependentUpon>
     </Compile>

@@ -59,7 +59,7 @@ Partial Class frmEntradas
         Me.grdEntradas.Redraw = True
         Me.grdEntradas.Row = 0
         Me.grdEntradas.Rows = 50
-        Me.grdEntradas.Size = New System.Drawing.Size(820, 622)
+        Me.grdEntradas.Size = New System.Drawing.Size(413, 622)
         Me.grdEntradas.TabIndex = 0
         '
         'StatusStrip1
@@ -75,6 +75,7 @@ Partial Class frmEntradas
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1366, 670)
+        Me.ControlBox = False
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.grdEntradas)
         Me.Name = "frmEntradas"
