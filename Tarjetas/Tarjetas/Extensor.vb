@@ -1,5 +1,30 @@
 ﻿Imports System.Runtime.CompilerServices
-
+Module Formulas
+    Public Function FormatearValorAlCornudoDeSql(ByVal Valor As Object) As String
+        Dim a As String = ""
+        If Not Valor Is Nothing Then
+            Select Case Valor.GetType.ToString
+                Case "System.String"
+                    a = String.Format("'{0}'", Valor.ToString)
+                Case "System.Short", "System.Integer", "System.Int16", "System.Int32", "System.Int64"
+                    a = Valor.ToString
+                Case "System.Single", "System.Double", "System.Decimal"
+                    a = Valor.ToString.Replace(",", ".")
+                Case "System.Boolean"
+                    If Valor = True Then
+                        a = "1"
+                    Else
+                        a = "0"
+                    End If
+                Case "System.DateTime"
+                    a = String.Format("'{0}'", Format(Valor, "MM/dd/yy"))
+                Case Else
+                    MsgBox("No esta incorporado el Type:" & Valor.GetType.ToString, MsgBoxStyle.Exclamation)
+            End Select
+        End If
+        Return a
+    End Function
+End Module
 Module E_ListBox
     ''' <summary>
     ''' Devuelve el código seleccionado en una lista con formato Codigo. Descripcion

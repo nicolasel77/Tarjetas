@@ -9,6 +9,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "clsBases", "..\..\ClsBases\
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SpeedGrilla", "..\..\SpeedGrilla\SpeedGrilla.vbproj", "{64F92811-4680-4543-A345-0F68983286E2}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Calendario", "..\..\Calendario\Calendario.vbproj", "{391C5EC4-24CA-4944-BDE3-F278847A8BEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,14 @@ Global
 		{64F92811-4680-4543-A345-0F68983286E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{64F92811-4680-4543-A345-0F68983286E2}.Release|x86.ActiveCfg = Release|x86
 		{64F92811-4680-4543-A345-0F68983286E2}.Release|x86.Build.0 = Release|x86
+		{391C5EC4-24CA-4944-BDE3-F278847A8BEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{391C5EC4-24CA-4944-BDE3-F278847A8BEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{391C5EC4-24CA-4944-BDE3-F278847A8BEC}.Debug|x86.ActiveCfg = Debug|x86
+		{391C5EC4-24CA-4944-BDE3-F278847A8BEC}.Debug|x86.Build.0 = Debug|x86
+		{391C5EC4-24CA-4944-BDE3-F278847A8BEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{391C5EC4-24CA-4944-BDE3-F278847A8BEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{391C5EC4-24CA-4944-BDE3-F278847A8BEC}.Release|x86.ActiveCfg = Release|x86
+		{391C5EC4-24CA-4944-BDE3-F278847A8BEC}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

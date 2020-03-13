@@ -55,6 +55,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\SpeedGrilla\C1.Win.C1FlexGrid.4.dll</HintPath>
     </Reference>
+    <Reference Include="C1.Win.C1Schedule.4, Version=4.0.20113.183, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -87,6 +88,12 @@
     <Compile Include="frmEntradas.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmResumen.Designer.vb">
+      <DependentUpon>frmResumen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmResumen.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Main.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -114,9 +121,13 @@
     <EmbeddedResource Include="frmEntradas.resx">
       <DependentUpon>frmEntradas.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmResumen.resx">
+      <DependentUpon>frmResumen.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -137,6 +148,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Calendario\Calendario.vbproj">
+      <Project>{391c5ec4-24ca-4944-bde3-f278847a8bec}</Project>
+      <Name>Calendario</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\ClsBases\clsBases.vbproj">
       <Project>{fd73ca8a-960b-4a45-8f5e-b4131b1c1a68}</Project>
       <Name>clsBases</Name>

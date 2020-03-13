@@ -8,15 +8,23 @@
     Private cImporte As Byte
     Private cAcreditado As Byte
 
+    Private gId As Byte
+    Private gSuc As Byte
+    Private gFecha As Byte
+    Private gTipo As Byte
+    Private gImporte As Byte
+
+    Private Fecha As Date
 
     Private dbG As New clsBases.Principal("dbGastos")
 
     Private Sub frmEntradas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim s As String
+        Dim n() As Integer = {13, 32, 42, 43, 45, 47, 112, 123}
+
         With grdEntradas
-            Dim n() As Integer = {13, 32, 42, 43, 45, 47, 112, 123}
             .TeclasManejadas = n
 
-            Dim s As String
             s = "SELECT Id, Suc, Fecha, Id_Tipo, Nombre AS Descripcion, Importe, Acreditado FROM vw_EntradasTarjeta WHERE Id=0"
 
             Dim dt As DataTable = dbG.Datos(s)
@@ -48,13 +56,44 @@
 
 
         End With
+
+        With grdGastos
+            .TeclasManejadas = n
+
+            s = "SELECT Id, Suc, Fecha, Tipo, Nombre AS Descripcion, Importe FROM vw_GastosTarjeta WHERE Id=0"
+
+            Dim dt As DataTable = dbG.Datos(s)
+            .MostrarDatos(dt, True)
+
+            gId = .ColIndex("Id")
+            gSuc = .ColIndex("Suc")
+            gFecha = .ColIndex("Fecha")
+            gTipo = .ColIndex("Tipo")
+            gImporte = .ColIndex("Importe")
+
+            .ColW(0) = 0
+            .ColW(gSuc) = 30
+            .ColW(gFecha) = 60
+            .ColW(gTipo) = 40
+            .ColW(gTipo + 1) = 80
+            .ColW(gImporte) = 80
+
+
+            'El estilo para pintar la columna total
+            vEstilo = grdGastos.Styles.Add("Importe")
+            vEstilo.Font = New Font("Arial", 8, FontStyle.Bold)
+            vEstilo.Format = "#,###,###.#"
+            vEstilo.DataType = GetType(Double)
+            vEstilo.TextAlign = C1.Win.C1FlexGrid.TextAlignEnum.RightBottom
+            grdGastos.Columnas(gImporte).Style = vEstilo
+
+        End With
     End Sub
 
     Private Sub grdEntradas_Editado(f As Short, c As Short, a As Object) Handles grdEntradas.Editado
         With grdEntradas
             Dim vId As Integer = .Texto(f, cId)
             Dim n As String = ""
-
 
             Select Case c
                 Case cSuc
@@ -85,26 +124,19 @@
                     End If
 
                 Case cImporte
-                    If IsDate(.Texto(f, 0)) Then
-                        If .Texto(f, cProv) > 0 And .Texto(f, cSuc) > 0 And .Texto(f, cProd) > 0 Then
+                    If IsDate(.Texto(f, cFecha)) Then
+                        If .Texto(f, cSuc) > 0 And .Texto(f, cTipo) > 0 Then
                             .Texto = a
-                            .Texto(f, c + 1) = .Texto(f, cCompra) * .Texto(f, cKilos)
-                            .Texto(f, c + 2) = .Texto(f, cVenta) * .Texto(f, cKilos)
                             '*******************
                             'Datos
                             '*******************
                             If vId Then
-                                n = String.Format("UPDATE Venta SET Kilos={0} WHERE Id={1}", FormatearValorAlCornudoDeSql(a), vId)
+                                n = String.Format("UPDATE Entradas_Tarjeta SET Importe={0} WHERE Id={1}", FormatearValorAlCornudoDeSql(a), vId)
                             Else
-                                n = String.Format("INSERT INTO Venta (Fecha, CodProov, CodSuc, Nombre, CodProd, Tip, CostoCompra, CostoVenta, Kilos) VALUES ({0}, {1}, {2}, '{3}', {4}, '{5}', {6}, {7}, {8})",
-                                                 FormatearValorAlCornudoDeSql(.Texto(f, 0)),
-                                                 .Texto(f, cProv),
-                                                 .Texto(f, cSuc),
-                                                 .Texto(f, cSuc + 1),
-                                                 .Texto(f, cProd),
-                                                 .Texto(f, cProd + 1),
-                                                 FormatearValorAlCornudoDeSql(.Texto(f, cCompra)),
-                                                 FormatearValorAlCornudoDeSql(.Texto(f, cVenta)),
+                                n = String.Format("INSERT INTO Entradas_Tarjeta (Suc, Fecha, Id_Tipo, Importe) VALUES ({0}, {1}, {2}, {3})",
+                                                  .Texto(f, cSuc),
+                                                  FormatearValorAlCornudoDeSql(.Texto(f, cFecha)),
+                                                 .Texto(f, cTipo),
                                                  FormatearValorAlCornudoDeSql(a))
                             End If
                             '*******************
@@ -112,71 +144,173 @@
                             '*******************
                             If f = .Rows - 1 Then
                                 .Filas.Add()
-                                If rdFecha.Checked Then
-                                    .Texto(f + 1, 0) = DateAdd(DateInterval.Day, 1, .Texto(f, 0))
-                                Else
-                                    .Texto(f + 1, 0) = .Texto(f, 0)
-                                End If
-                                If rdProv.Checked Then
-                                    Dim pr As Integer = .Texto(f, cProv)
-                                    Dim ns As String = Proxima_Proveedor(pr)
-                                    Dim pp As Single = Costo_Proveedor(.Texto(f, 0), pr, .Texto(f, cProd))
-                                    .Texto(f + 1, cProv) = pr
-                                    .Texto(f + 1, cCompra) = pp
-                                Else
-                                    .Texto(f + 1, cProv) = .Texto(f, cProv)
-                                    .Texto(f + 1, cCompra) = .Texto(f, cCompra)
-                                End If
-                                If rdSuc.Checked Then
-                                    Dim pr As Integer = .Texto(f, cSuc)
-                                    Dim ns As String = Proxima_Sucursal(pr)
-                                    Dim pp As Single = Costo_Sucursal(.Texto(f, 0), pr, .Texto(f, cProd))
-                                    .Texto(f + 1, cSuc) = pr
-                                    .Texto(f + 1, cSuc + 1) = ns
-                                    .Texto(f + 1, cVenta) = pp
-                                Else
-                                    .Texto(f + 1, cSuc) = .Texto(f, cSuc)
-                                    .Texto(f + 1, cSuc + 1) = .Texto(f, cSuc + 1)
-                                    .Texto(f + 1, cVenta) = .Texto(f, cVenta)
-                                End If
-                                If rdProd.Checked Then
-                                    Dim pr As Integer = .Texto(f, cProd)
-                                    Dim ns As String = Proximo_Producto(pr)
+                                .Texto(f + 1, cSuc) = .Texto(f, cSuc)
+                                .Texto(f + 1, cFecha) = .Texto(f, cFecha)
 
-                                    .Texto(f + 1, cProd) = pr
-                                    .Texto(f + 1, cProd + 1) = ns
-
-                                    Dim pp As Single
-                                    pp = Costo_Proveedor(.Texto(f, 0), .Texto(f, cProv), pr)
-                                    .Texto(f + 1, cCompra) = pp
-                                    pp = Costo_Sucursal(.Texto(f, 0), .Texto(f, cSuc), pr)
-                                    .Texto(f + 1, cVenta) = pp
-                                Else
-                                    .Texto(f + 1, cProd) = .Texto(f, cProd)
-                                    .Texto(f + 1, cProd + 1) = .Texto(f, cProd + 1)
-                                End If
                             End If
-                            .ActivarCelda(f + 1, cKilos)
+                            .ActivarCelda(f + 1, cTipo)
+                        Else
+                            .ActivarCelda(f + 1, cTipo)
+                        End If
+                    Else
+                        If .Texto(f, cSuc) > 0 Then
+                            .ActivarCelda(f + 1, cSuc)
+                        Else
+                            .ActivarCelda(f + 1, cTipo)
                         End If
                     End If
+                Case cAcreditado
+                    .Texto(f, c) = a
+                    If vId Then
+                        n = String.Format("UPDATE Entradas_Tarjeta SET Acreditado={0} WHERE Id={1}", FormatearValorAlCornudoDeSql(a), vId)
+                        .ActivarCelda(f + 1, c)
+                    Else
+                        Beep()
+                        .ActivarCelda(f, cSuc)
                     End If
+
             End Select
             If n.Length Then
-                dbM.EjecutarCadena(n, fn, fn)
+                dbG.EjecutarCadena(n)
                 If vId = 0 Then
-                    n = dbM.BuscarDato("SELECT MAX(Id) FROM Venta")
+                    n = dbG.BuscarDato("SELECT MAX(Id) FROM Entradas_Tarjeta")
                     If IsNumeric(n) Then
                         .Texto(f, cId) = CInt(n)
                     End If
                 End If
+                Saldo_General()
             End If
-            Totales()
+
+        End With
+    End Sub
+
+    Private Sub grdGastos_Editado(f As Short, c As Short, a As Object) Handles grdGastos.Editado
+        With grdGastos
+            Dim vId As Integer = .Texto(f, gId)
+            Dim n As String = ""
+
+            Select Case c
+                Case gSuc
+                    .Texto = a
+                    .ActivarCelda(f, gFecha)
+                    If vId Then
+                        n = String.Format("UPDATE Gastos_Tarjeta SET Suc={0} WHERE Id={1}", a, vId)
+                    End If
+                Case gFecha
+                    .Texto = a
+                    If vId Then
+                        n = String.Format("UPDATE Gastos_Tarjeta SET Fecha={0} WHERE Id={1}", CDate(a).Fecha_SQL, vId)
+                    End If
+                    .ActivarCelda(f, gTipo)
+
+                Case gTipo
+                    Dim s As String = Nombre_TipoGT(a)
+                    If s.Length Then
+                        .Texto = a
+                        .Texto(f, c + 1) = s
+                        If vId Then
+                            n = String.Format("UPDATE Gastos_Tarjeta SET Tipo={0} WHERE Id={1}", a, vId)
+                        End If
+                        .ActivarCelda(f, gImporte)
+                    Else
+                        Beep()
+                        .ErrorEnTxt()
+                    End If
+
+                Case gImporte
+                    If IsDate(.Texto(f, gFecha)) Then
+                        If .Texto(f, gSuc) > 0 And .Texto(f, gTipo) > 0 Then
+                            .Texto = a
+                            '*******************
+                            'Datos
+                            '*******************
+                            If vId Then
+                                n = String.Format("UPDATE Gastos_Tarjeta SET Importe={0} WHERE Id={1}", FormatearValorAlCornudoDeSql(a), vId)
+                            Else
+                                n = String.Format("INSERT INTO Gastos_Tarjeta (Suc, Fecha, Tipo, Importe) VALUES ({0}, {1}, {2}, {3})",
+                                                  .Texto(f, gSuc),
+                                                  FormatearValorAlCornudoDeSql(.Texto(f, gFecha)),
+                                                 .Texto(f, gTipo),
+                                                 FormatearValorAlCornudoDeSql(a))
+                            End If
+                            '*******************
+                            'ON NEW
+                            '*******************
+                            If f = .Rows - 1 Then
+                                .Filas.Add()
+                                .Texto(f + 1, gSuc) = .Texto(f, gSuc)
+                                .Texto(f + 1, gFecha) = .Texto(f, gFecha)
+
+                            End If
+                            .ActivarCelda(f + 1, gTipo)
+                        Else
+                            .ActivarCelda(f + 1, gTipo)
+                        End If
+                    Else
+                        If .Texto(f, gSuc) > 0 Then
+                            .ActivarCelda(f + 1, gSuc)
+                        Else
+                            .ActivarCelda(f + 1, gTipo)
+                        End If
+                    End If
+
+
+            End Select
+            If n.Length Then
+                dbG.EjecutarCadena(n)
+                If vId = 0 Then
+                    n = dbG.BuscarDato("SELECT MAX(Id) FROM Gastos_Tarjeta")
+                    If IsNumeric(n) Then
+                        .Texto(f, gId) = CInt(n)
+                    End If
+                End If
+                Saldo_General()
             End If
+
         End With
     End Sub
 
 
+
     Private Function Nombre_Tipo(ByVal Id As Integer) As String
-        Return = dbG.BuscarDato("SELECT Nombre FROM Tipo_Cuentas WHERE Id=" & Id)
+        Return dbG.BuscarDato("SELECT Nombre FROM Tipo_Cuentas WHERE Id=" & Id)
     End Function
+    Private Function Nombre_TipoGT(ByVal Id As Integer) As String
+        Return dbG.BuscarDato("SELECT Nombre FROM Tipo_GastosTarjeta WHERE Id=" & Id)
+    End Function
+
+
+    Private Sub mntFecha_DateChanged(sender As Object, e As DateRangeEventArgs) Handles mntFecha.DateChanged
+        If mntFecha.SelectionStart.Date <> Fecha Then
+            Me.Cursor = Cursors.WaitCursor
+            Cargar_Entradas()
+            Cargar_Gastos()
+            Saldo_General()
+            Me.Cursor = Cursors.Default
+        End If
+    End Sub
+
+    Private Sub Saldo_General()
+        Dim s As String = dbG.BuscarDato($"SELECT dbo.f_SaldoTarjetasGeneral({Fecha.Fecha_SQL}, 0)")
+        lblSaldo.Text = "Saldo General: " & Format(Convert.ToSingle(s), "$ #,###.#")
+    End Sub
+
+    Private Sub Cargar_Entradas()
+        Fecha = mntFecha.SelectionStart.Date
+        Dim s As String
+        s = $"SELECT Id, Suc, Fecha, Id_Tipo, Nombre AS Descripcion, Importe, Acreditado FROM vw_EntradasTarjeta WHERE Fecha<={Fecha.Fecha_SQL} ORDER BY Id"
+
+        Dim dt As DataTable = dbG.Datos(s)
+        grdEntradas.MostrarDatos(dt, False)
+        grdEntradas.ActivarCelda(grdEntradas.Rows - 1, cSuc)
+    End Sub
+    Private Sub Cargar_Gastos()
+        Fecha = mntFecha.SelectionStart.Date
+        Dim s As String
+        s = $"SELECT Id, Suc, Fecha, Tipo, Nombre AS Descripcion, Importe FROM vw_GastosTarjeta WHERE Fecha<={Fecha.Fecha_SQL} ORDER BY Id"
+
+        Dim dt As DataTable = dbG.Datos(s)
+        grdGastos.MostrarDatos(dt, False)
+        grdGastos.ActivarCelda(grdGastos.Rows - 1, cSuc)
+    End Sub
 End Class
