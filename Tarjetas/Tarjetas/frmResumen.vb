@@ -1,6 +1,4 @@
 ﻿Public Class frmResumen
-    Private db As New clsBases.Principal("dbGastos")
-
     Private Sub Cargar()
         Entradas()
         Gastos()
@@ -36,11 +34,14 @@
         Dim f1 As Date = cFecha.ValorActual
         Dim f2 As Date = cFecha.ValorActualHasta
 
-        Dim s As String = "SELECT {0} FROM vw_EntradasTarjeta WHERE Fecha BETWEEN {1} AND {2} {3} {4}"
-        Dim Campos As String = "", groupby As String = "", acreditado As String = " AND Acreditado=1"
+        Dim s As String = "SELECT {0} FROM vw_EntradasTarjeta WHERE Fecha BETWEEN {1} AND {2} {3} {4} {5}"
+        Dim Campos As String = "", groupby As String = "", acreditado As String = " AND Acreditado=1", tipoe As String = ""
 
         If chAcreditado.Checked = False Then acreditado = ""
-
+        tipoe = Codigos_Seleccionados(lstTiposE, "Id_Tipo")
+        If tipoe.Length Then
+            tipoe = " AND " & tipoe
+        End If
         If chAgrupar.Checked = True Then
             If chSuc.Checked Then
                 Campos = "Suc"
@@ -56,22 +57,29 @@
             groupby = "GROUP BY " & Campos
             Unir(Campos, "SUM(Importe) AS Total", ", ")
 
-            s = String.Format(s, Campos, f1.Fecha_SQL, f2.Fecha_SQL, acreditado, groupby)
+            s = String.Format(s, Campos, f1.Fecha_SQL, f2.Fecha_SQL, acreditado, tipoe, groupby)
         Else
             Campos = "*"
-            s = String.Format(s & "ORDER BY Id", Campos, f1.Fecha_SQL, f2.Fecha_SQL, acreditado, "")
+            s = String.Format(s & "ORDER BY Id", Campos, f1.Fecha_SQL, f2.Fecha_SQL, acreditado, tipoe, "")
         End If
 
         Dim dt As DataTable = db.Datos(s)
 
         With grdEntradas
             .MostrarDatos(dt, True, True)
-            .Columnas(.Cols - 1).Format = "#,###.#"
-            .SumarCol(.ColIndex("Total"))
-            .SumarCol(.ColIndex("Importe"))
+
+            If .ColIndex("Importe") > -1 Then
+                .SumarCol(.ColIndex("Importe"))
+                .Columnas(.Cols - 2).Format = "#,###.#"
+            Else
+                .SumarCol(.ColIndex("Total"))
+                .Columnas(.Cols - 1).Format = "#,###.#"
+            End If
+
+
             .AutosizeAll()
             .ColW(.ColIndex("Nombre")) = 80
-
+            .ActivarCelda(.Rows - 1, 0)
         End With
 
     End Sub
@@ -145,4 +153,11 @@
         Cargar()
     End Sub
 
+    Private Sub frmResumen_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Llenar_List(lstTiposE, "Tipo_Cuentas")
+    End Sub
+
+    Private Sub lstTiposE_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstTiposE.SelectedIndexChanged
+        Entradas()
+    End Sub
 End Class

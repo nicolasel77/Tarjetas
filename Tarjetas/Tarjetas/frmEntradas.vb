@@ -49,7 +49,7 @@
             'El estilo para pintar la columna total
             vEstilo = grdEntradas.Styles.Add("Importe")
             vEstilo.Font = New Font("Arial", 8, FontStyle.Bold)
-            vEstilo.Format = "#,###,###.#"
+            vEstilo.Format = "#,###,###.##"
             vEstilo.DataType = GetType(Double)
             vEstilo.TextAlign = C1.Win.C1FlexGrid.TextAlignEnum.RightBottom
             grdEntradas.Columnas(cImporte).Style = vEstilo
@@ -82,7 +82,7 @@
             'El estilo para pintar la columna total
             vEstilo = grdGastos.Styles.Add("Importe")
             vEstilo.Font = New Font("Arial", 8, FontStyle.Bold)
-            vEstilo.Format = "#,###,###.#"
+            vEstilo.Format = "#,###,###.##"
             vEstilo.DataType = GetType(Double)
             vEstilo.TextAlign = C1.Win.C1FlexGrid.TextAlignEnum.RightBottom
             grdGastos.Columnas(gImporte).Style = vEstilo

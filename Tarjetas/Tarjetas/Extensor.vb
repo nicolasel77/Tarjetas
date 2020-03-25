@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Module Formulas
+    Public db As New clsBases.Principal("dbGastos")
     Public Function FormatearValorAlCornudoDeSql(ByVal Valor As Object) As String
         Dim a As String = ""
         If Not Valor Is Nothing Then
@@ -23,6 +24,49 @@ Module Formulas
             End Select
         End If
         Return a
+    End Function
+
+    Public Sub Llenar_List(ByRef lst As ListBox, ByVal Tabla As String, Optional ByVal ID As String = "", Optional ByVal Nombre As String = "", Optional ByVal Where As String = "", Optional ByVal Order As String = "")
+        If Where.Length Then Where = " WHERE " & Where
+        If Order.Length = 0 Then Order = ID
+
+        Dim dt As DataTable
+        If ID.Length Then
+            dt = db.Datos(String.Format("SELECT {0}, {1} FROM {2} {3} ORDER BY {4}", ID, Nombre, Tabla, Where, Order))
+        Else
+            dt = db.Datos("SELECT * FROM " & Tabla & Where)
+        End If
+
+        For Each f As DataRow In dt.Rows
+            lst.Items.Add(String.Format("{0}. {1}", f.Item(0), f.Item(1).ToString.Trim))
+        Next
+    End Sub
+
+    Public Sub Llenar_List(ByRef lst As ComboBox, ByVal Tabla As String, Optional ByVal ID As String = "", Optional ByVal Nombre As String = "", Optional ByVal Where As String = "", Optional ByVal Order As String = "")
+        If Where.Length Then Where = " WHERE " & Where
+        If Order.Length = 0 Then Order = ID
+
+        Dim dt As DataTable
+        If ID.Length Then
+            dt = db.Datos(String.Format("SELECT {0}, {1} FROM {2} {3} ORDER BY {4}", ID, Nombre, Tabla, Where, Order))
+        Else
+            dt = db.Datos("SELECT * FROM " & Tabla & Where)
+        End If
+
+        For Each f As DataRow In dt.Rows
+            lst.Items.Add(String.Format("{0}. {1}", f.Item(0), f.Item(1).ToString.Trim))
+        Next
+    End Sub
+
+    Public Function Codigos_Seleccionados(ByVal lst As ListBox, Campo As String, Optional Union As String = ", ") As String
+        Dim cadena As String = ""
+        For Each s As String In lst.SelectedItems
+            cadena.Unir(s.Codigo_Seleccionado, ",")
+        Next
+        If cadena.Length Then
+            cadena = $"{Campo} IN ({cadena})"
+        End If
+        Return cadena
     End Function
 End Module
 Module E_ListBox
