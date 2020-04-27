@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SpeedGrilla", "SpeedGrilla.vbproj", "{64F92811-4680-4543-A345-0F68983286E2}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ClsFormulas", "ClsFormulas\ClsFormulas.vbproj", "{3CB41438-A4FA-4A82-9F08-BD7440A9E455}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{64F92811-4680-4543-A345-0F68983286E2}.Debug.ActiveCfg = Debug|.NET
+		{64F92811-4680-4543-A345-0F68983286E2}.Debug.Build.0 = Debug|.NET
+		{64F92811-4680-4543-A345-0F68983286E2}.Release.ActiveCfg = Release|.NET
+		{64F92811-4680-4543-A345-0F68983286E2}.Release.Build.0 = Release|.NET
+		{3CB41438-A4FA-4A82-9F08-BD7440A9E455}.Debug.ActiveCfg = Debug|.NET
+		{3CB41438-A4FA-4A82-9F08-BD7440A9E455}.Debug.Build.0 = Debug|.NET
+		{3CB41438-A4FA-4A82-9F08-BD7440A9E455}.Release.ActiveCfg = Release|.NET
+		{3CB41438-A4FA-4A82-9F08-BD7440A9E455}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

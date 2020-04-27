@@ -49,7 +49,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="C1.Common">
-      <HintPath>..\..\..\SpeedGrilla\C1.Common.dll</HintPath>
+      <HintPath>..\SpeedGrilla\C1.Common.dll</HintPath>
     </Reference>
     <Reference Include="C1.Win.C1FlexGrid.4, Version=4.6.20113.647, Culture=neutral, PublicKeyToken=79882d576c6336da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -148,15 +148,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Calendario\Calendario.vbproj">
+    <ProjectReference Include="..\Calendario\Calendario.vbproj">
       <Project>{391c5ec4-24ca-4944-bde3-f278847a8bec}</Project>
       <Name>Calendario</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\ClsBases\clsBases.vbproj">
+    <ProjectReference Include="..\ClsBases\clsBases.vbproj">
       <Project>{fd73ca8a-960b-4a45-8f5e-b4131b1c1a68}</Project>
       <Name>clsBases</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\SpeedGrilla\SpeedGrilla.vbproj">
+    <ProjectReference Include="..\SpeedGrilla\SpeedGrilla.vbproj">
       <Project>{64f92811-4680-4543-a345-0f68983286e2}</Project>
       <Name>SpeedGrilla</Name>
     </ProjectReference>
