@@ -127,28 +127,55 @@
                     If IsDate(.Texto(f, cFecha)) Then
                         If .Texto(f, cSuc) > 0 And .Texto(f, cTipo) > 0 Then
                             .Texto = a
+
+                            If chAuto.Checked Then
+                                .Texto(f, cImporte + 1) = True
+                            End If
+                            Dim vAuto As String = "0"
+                            If .Texto(f, cImporte + 1) = True Then vAuto = "1"
                             '*******************
                             'Datos
                             '*******************
                             If vId Then
                                 n = String.Format("UPDATE Entradas_Tarjeta SET Importe={0} WHERE Id={1}", FormatearValorAlCornudoDeSql(a), vId)
                             Else
-                                n = String.Format("INSERT INTO Entradas_Tarjeta (Suc, Fecha, Id_Tipo, Importe) VALUES ({0}, {1}, {2}, {3})",
+                                n = String.Format("INSERT INTO Entradas_Tarjeta (Suc, Fecha, Id_Tipo, Importe, Acreditado) VALUES ({0}, {1}, {2}, {3}, {4})",
                                                   .Texto(f, cSuc),
                                                   FormatearValorAlCornudoDeSql(.Texto(f, cFecha)),
                                                  .Texto(f, cTipo),
-                                                 FormatearValorAlCornudoDeSql(a))
+                                                 FormatearValorAlCornudoDeSql(a),
+                                                 vAuto)
                             End If
                             '*******************
                             'ON NEW
                             '*******************
                             If f = .Rows - 1 Then
                                 .Filas.Add()
-                                .Texto(f + 1, cSuc) = .Texto(f, cSuc)
-                                .Texto(f + 1, cFecha) = .Texto(f, cFecha)
+                                If rdSuc.Checked Then
+                                    .Texto(f + 1, cSuc) = Siguiente_Sucursal(.Texto(f, cSuc))
+                                Else
+                                    .Texto(f + 1, cSuc) = .Texto(f, cSuc)
+                                End If
+                                If rdFecha.Checked Then
+                                    .Texto(f + 1, cFecha) = CDate(.Texto(f, cFecha)).AddDays(1)
+                                Else
+                                    .Texto(f + 1, cFecha) = .Texto(f, cFecha)
+                                End If
 
+                                If chRepetirTipo.Checked Then
+                                    .Texto(f + 1, cTipo) = .Texto(f, cTipo)
+                                    .Texto(f + 1, cTipo + 1) = .Texto(f, cTipo + 1)
+                                End If
+                                If chAuto.Checked Then
+                                    .Texto(f + 1, cImporte + 1) = True
+                                End If
                             End If
-                            .ActivarCelda(f + 1, cTipo)
+                            If chRepetirTipo.Checked Then
+                                .ActivarCelda(f + 1, cImporte)
+                            Else
+                                .ActivarCelda(f + 1, cTipo)
+                            End If
+
                         Else
                             .ActivarCelda(f + 1, cTipo)
                         End If
@@ -183,6 +210,18 @@
 
         End With
     End Sub
+
+    Private Function Siguiente_Sucursal(v As Object) As Int16
+        Dim s As String = db.BuscarDato($"SELECT TOP 1 Sucursal FROM Sucursales WHERE Tarjeta=1 AND Sucursal>{v} ORDER BY Sucursal")
+        If s = "" Then
+            s = db.BuscarDato($"SELECT TOP 1 Sucursal FROM Sucursales WHERE Tarjeta=1 ORDER BY Sucursal")
+        End If
+        If s = "" Then
+            Return 0
+        Else
+            Return CInt(s)
+        End If
+    End Function
 
     Private Sub grdGastos_Editado(f As Short, c As Short, a As Object) Handles grdGastos.Editado
         With grdGastos

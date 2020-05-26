@@ -31,6 +31,12 @@ Partial Class frmEntradas
         Me.mntFecha = New System.Windows.Forms.MonthCalendar()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.lblSaldo = New System.Windows.Forms.Label()
+        Me.rdNada = New System.Windows.Forms.RadioButton()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.rdFecha = New System.Windows.Forms.RadioButton()
+        Me.rdSuc = New System.Windows.Forms.RadioButton()
+        Me.chAuto = New System.Windows.Forms.CheckBox()
+        Me.chRepetirTipo = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
         'grdEntradas
@@ -156,12 +162,84 @@ Partial Class frmEntradas
         Me.lblSaldo.Text = "Saldo"
         Me.lblSaldo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'rdNada
+        '
+        Me.rdNada.AutoSize = True
+        Me.rdNada.Checked = True
+        Me.rdNada.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.rdNada.Location = New System.Drawing.Point(859, 265)
+        Me.rdNada.Name = "rdNada"
+        Me.rdNada.Size = New System.Drawing.Size(50, 17)
+        Me.rdNada.TabIndex = 5
+        Me.rdNada.TabStop = True
+        Me.rdNada.Text = "Nada"
+        Me.rdNada.UseVisualStyleBackColor = True
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(856, 249)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(66, 13)
+        Me.Label4.TabIndex = 6
+        Me.Label4.Text = "Incrementar:"
+        '
+        'rdFecha
+        '
+        Me.rdFecha.AutoSize = True
+        Me.rdFecha.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.rdFecha.Location = New System.Drawing.Point(859, 288)
+        Me.rdFecha.Name = "rdFecha"
+        Me.rdFecha.Size = New System.Drawing.Size(54, 17)
+        Me.rdFecha.TabIndex = 5
+        Me.rdFecha.Text = "Fecha"
+        Me.rdFecha.UseVisualStyleBackColor = True
+        '
+        'rdSuc
+        '
+        Me.rdSuc.AutoSize = True
+        Me.rdSuc.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.rdSuc.Location = New System.Drawing.Point(859, 311)
+        Me.rdSuc.Name = "rdSuc"
+        Me.rdSuc.Size = New System.Drawing.Size(65, 17)
+        Me.rdSuc.TabIndex = 5
+        Me.rdSuc.Text = "Sucursal"
+        Me.rdSuc.UseVisualStyleBackColor = True
+        '
+        'chAuto
+        '
+        Me.chAuto.AutoSize = True
+        Me.chAuto.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.chAuto.Location = New System.Drawing.Point(859, 375)
+        Me.chAuto.Name = "chAuto"
+        Me.chAuto.Size = New System.Drawing.Size(74, 17)
+        Me.chAuto.TabIndex = 7
+        Me.chAuto.Text = "Autorizado"
+        Me.chAuto.UseVisualStyleBackColor = True
+        '
+        'chRepetirTipo
+        '
+        Me.chRepetirTipo.AutoSize = True
+        Me.chRepetirTipo.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.chRepetirTipo.Location = New System.Drawing.Point(859, 352)
+        Me.chRepetirTipo.Name = "chRepetirTipo"
+        Me.chRepetirTipo.Size = New System.Drawing.Size(82, 17)
+        Me.chRepetirTipo.TabIndex = 8
+        Me.chRepetirTipo.Text = "Repetir Tipo"
+        Me.chRepetirTipo.UseVisualStyleBackColor = True
+        '
         'frmEntradas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1272, 630)
         Me.ControlBox = False
+        Me.Controls.Add(Me.chRepetirTipo)
+        Me.Controls.Add(Me.chAuto)
+        Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.rdSuc)
+        Me.Controls.Add(Me.rdFecha)
+        Me.Controls.Add(Me.rdNada)
         Me.Controls.Add(Me.mntFecha)
         Me.Controls.Add(Me.lblSaldo)
         Me.Controls.Add(Me.Label3)
@@ -186,4 +264,10 @@ Partial Class frmEntradas
     Friend WithEvents mntFecha As MonthCalendar
     Friend WithEvents Label3 As Label
     Friend WithEvents lblSaldo As Label
+    Friend WithEvents rdNada As RadioButton
+    Friend WithEvents Label4 As Label
+    Friend WithEvents rdFecha As RadioButton
+    Friend WithEvents rdSuc As RadioButton
+    Friend WithEvents chAuto As CheckBox
+    Friend WithEvents chRepetirTipo As CheckBox
 End Class
