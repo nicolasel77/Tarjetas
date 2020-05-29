@@ -25,18 +25,22 @@ Partial Class frmEntradas
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmEntradas))
         Me.grdEntradas = New Grilla2.SpeedGrilla()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
+        Me.lblSaldo = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.lblSuma = New System.Windows.Forms.ToolStripStatusLabel()
         Me.grdGastos = New Grilla2.SpeedGrilla()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.mntFecha = New System.Windows.Forms.MonthCalendar()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.lblSaldo = New System.Windows.Forms.Label()
         Me.rdNada = New System.Windows.Forms.RadioButton()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.rdFecha = New System.Windows.Forms.RadioButton()
         Me.rdSuc = New System.Windows.Forms.RadioButton()
         Me.chAuto = New System.Windows.Forms.CheckBox()
         Me.chRepetirTipo = New System.Windows.Forms.CheckBox()
+        Me.cSucs = New Sucursales.Sucursales()
+        Me.cmdLimpiar = New System.Windows.Forms.Button()
+        Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'grdEntradas
@@ -75,11 +79,24 @@ Partial Class frmEntradas
         '
         'StatusStrip1
         '
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblSaldo, Me.lblSuma})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 608)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(1272, 22)
         Me.StatusStrip1.TabIndex = 1
         Me.StatusStrip1.Text = "StatusStrip1"
+        '
+        'lblSaldo
+        '
+        Me.lblSaldo.Name = "lblSaldo"
+        Me.lblSaldo.Size = New System.Drawing.Size(36, 17)
+        Me.lblSaldo.Text = "Saldo"
+        '
+        'lblSuma
+        '
+        Me.lblSuma.Name = "lblSuma"
+        Me.lblSuma.Size = New System.Drawing.Size(37, 17)
+        Me.lblSuma.Text = "Suma"
         '
         'grdGastos
         '
@@ -152,22 +169,12 @@ Partial Class frmEntradas
         Me.Label3.Text = "Fecha"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'lblSaldo
-        '
-        Me.lblSaldo.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblSaldo.Location = New System.Drawing.Point(855, 203)
-        Me.lblSaldo.Name = "lblSaldo"
-        Me.lblSaldo.Size = New System.Drawing.Size(192, 23)
-        Me.lblSaldo.TabIndex = 3
-        Me.lblSaldo.Text = "Saldo"
-        Me.lblSaldo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
         'rdNada
         '
         Me.rdNada.AutoSize = True
         Me.rdNada.Checked = True
         Me.rdNada.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.rdNada.Location = New System.Drawing.Point(859, 265)
+        Me.rdNada.Location = New System.Drawing.Point(859, 219)
         Me.rdNada.Name = "rdNada"
         Me.rdNada.Size = New System.Drawing.Size(50, 17)
         Me.rdNada.TabIndex = 5
@@ -178,7 +185,7 @@ Partial Class frmEntradas
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(856, 249)
+        Me.Label4.Location = New System.Drawing.Point(856, 203)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(66, 13)
         Me.Label4.TabIndex = 6
@@ -188,7 +195,7 @@ Partial Class frmEntradas
         '
         Me.rdFecha.AutoSize = True
         Me.rdFecha.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.rdFecha.Location = New System.Drawing.Point(859, 288)
+        Me.rdFecha.Location = New System.Drawing.Point(859, 242)
         Me.rdFecha.Name = "rdFecha"
         Me.rdFecha.Size = New System.Drawing.Size(54, 17)
         Me.rdFecha.TabIndex = 5
@@ -199,7 +206,7 @@ Partial Class frmEntradas
         '
         Me.rdSuc.AutoSize = True
         Me.rdSuc.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.rdSuc.Location = New System.Drawing.Point(859, 311)
+        Me.rdSuc.Location = New System.Drawing.Point(859, 265)
         Me.rdSuc.Name = "rdSuc"
         Me.rdSuc.Size = New System.Drawing.Size(65, 17)
         Me.rdSuc.TabIndex = 5
@@ -210,7 +217,7 @@ Partial Class frmEntradas
         '
         Me.chAuto.AutoSize = True
         Me.chAuto.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.chAuto.Location = New System.Drawing.Point(859, 375)
+        Me.chAuto.Location = New System.Drawing.Point(859, 329)
         Me.chAuto.Name = "chAuto"
         Me.chAuto.Size = New System.Drawing.Size(74, 17)
         Me.chAuto.TabIndex = 7
@@ -221,12 +228,36 @@ Partial Class frmEntradas
         '
         Me.chRepetirTipo.AutoSize = True
         Me.chRepetirTipo.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.chRepetirTipo.Location = New System.Drawing.Point(859, 352)
+        Me.chRepetirTipo.Location = New System.Drawing.Point(859, 306)
         Me.chRepetirTipo.Name = "chRepetirTipo"
         Me.chRepetirTipo.Size = New System.Drawing.Size(82, 17)
         Me.chRepetirTipo.TabIndex = 8
         Me.chRepetirTipo.Text = "Repetir Tipo"
         Me.chRepetirTipo.UseVisualStyleBackColor = True
+        '
+        'cSucs
+        '
+        Me.cSucs.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cSucs.Filtro_Tabla = ""
+        Me.cSucs.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cSucs.Location = New System.Drawing.Point(1062, 6)
+        Me.cSucs.Name = "cSucs"
+        Me.cSucs.Size = New System.Drawing.Size(210, 588)
+        Me.cSucs.TabIndex = 9
+        Me.cSucs.Titulo = "Sucursales"
+        '
+        'cmdLimpiar
+        '
+        Me.cmdLimpiar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.cmdLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.cmdLimpiar.Location = New System.Drawing.Point(855, 571)
+        Me.cmdLimpiar.Name = "cmdLimpiar"
+        Me.cmdLimpiar.Size = New System.Drawing.Size(75, 23)
+        Me.cmdLimpiar.TabIndex = 10
+        Me.cmdLimpiar.Text = "Limpiar"
+        Me.cmdLimpiar.UseVisualStyleBackColor = True
         '
         'frmEntradas
         '
@@ -234,6 +265,8 @@ Partial Class frmEntradas
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1272, 630)
         Me.ControlBox = False
+        Me.Controls.Add(Me.cmdLimpiar)
+        Me.Controls.Add(Me.cSucs)
         Me.Controls.Add(Me.chRepetirTipo)
         Me.Controls.Add(Me.chAuto)
         Me.Controls.Add(Me.Label4)
@@ -241,7 +274,6 @@ Partial Class frmEntradas
         Me.Controls.Add(Me.rdFecha)
         Me.Controls.Add(Me.rdNada)
         Me.Controls.Add(Me.mntFecha)
-        Me.Controls.Add(Me.lblSaldo)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
@@ -251,6 +283,8 @@ Partial Class frmEntradas
         Me.Name = "frmEntradas"
         Me.Text = "Entradas - Gastos"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
+        Me.StatusStrip1.ResumeLayout(False)
+        Me.StatusStrip1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -263,11 +297,14 @@ Partial Class frmEntradas
     Friend WithEvents Label2 As Label
     Friend WithEvents mntFecha As MonthCalendar
     Friend WithEvents Label3 As Label
-    Friend WithEvents lblSaldo As Label
     Friend WithEvents rdNada As RadioButton
     Friend WithEvents Label4 As Label
     Friend WithEvents rdFecha As RadioButton
     Friend WithEvents rdSuc As RadioButton
     Friend WithEvents chAuto As CheckBox
     Friend WithEvents chRepetirTipo As CheckBox
+    Friend WithEvents cSucs As Sucursales.Sucursales
+    Friend WithEvents lblSaldo As ToolStripStatusLabel
+    Friend WithEvents lblSuma As ToolStripStatusLabel
+    Friend WithEvents cmdLimpiar As Button
 End Class

@@ -1516,7 +1516,12 @@ Public Class SpeedGrilla
         End Function
         Function C1EditorGetValue() As Object Implements C1.Win.C1FlexGrid.IC1EmbeddedEditor.C1EditorGetValue
             Try
-                Return valor.Date
+                If IsNothing(valor) Then
+                    Return Today.Date
+                Else
+                    Return valor.Date
+                End If
+
             Catch er As Exception
                 'MsgBox(er.Message)
             End Try

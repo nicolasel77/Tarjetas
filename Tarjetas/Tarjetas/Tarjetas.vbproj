@@ -160,6 +160,10 @@
       <Project>{64f92811-4680-4543-a345-0f68983286e2}</Project>
       <Name>SpeedGrilla</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sucursales\Sucursales.vbproj">
+      <Project>{0486bd4c-436b-4d04-be2d-4550ed9e2940}</Project>
+      <Name>Sucursales</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

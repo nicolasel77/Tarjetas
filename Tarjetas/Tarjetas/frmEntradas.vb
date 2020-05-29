@@ -37,24 +37,7 @@
             cImporte = .ColIndex("Importe")
             cAcreditado = .ColIndex("Acreditado")
 
-            .ColW(0) = 0
-            .ColW(cSuc) = 30
-            .ColW(cFecha) = 60
-            .ColW(cTipo) = 40
-            .ColW(cTipo + 1) = 80
-            .ColW(cImporte) = 80
-            .ColW(cAcreditado) = 55
-
-
-            'El estilo para pintar la columna total
-            vEstilo = grdEntradas.Styles.Add("Importe")
-            vEstilo.Font = New Font("Arial", 8, FontStyle.Bold)
-            vEstilo.Format = "#,###,###.##"
-            vEstilo.DataType = GetType(Double)
-            vEstilo.TextAlign = C1.Win.C1FlexGrid.TextAlignEnum.RightBottom
-            grdEntradas.Columnas(cImporte).Style = vEstilo
-
-
+            Formato_Entradas
         End With
 
         With grdGastos
@@ -87,6 +70,27 @@
             vEstilo.TextAlign = C1.Win.C1FlexGrid.TextAlignEnum.RightBottom
             grdGastos.Columnas(gImporte).Style = vEstilo
 
+        End With
+    End Sub
+
+    Private Sub Formato_Entradas()
+        With grdEntradas
+            .ColW(0) = 0
+            .ColW(cSuc) = 30
+            .ColW(cFecha) = 60
+            .ColW(cTipo) = 40
+            .ColW(cTipo + 1) = 80
+            .ColW(cImporte) = 80
+            .ColW(cAcreditado) = 55
+
+
+            'El estilo para pintar la columna total
+            vEstilo = grdEntradas.Styles.Add("Importe")
+            vEstilo.Font = New Font("Arial", 8, FontStyle.Bold)
+            vEstilo.Format = "#,###,###.##"
+            vEstilo.DataType = GetType(Double)
+            vEstilo.TextAlign = C1.Win.C1FlexGrid.TextAlignEnum.RightBottom
+            grdEntradas.Columnas(cImporte).Style = vEstilo
         End With
     End Sub
 
@@ -179,6 +183,8 @@
                         Else
                             .ActivarCelda(f + 1, cTipo)
                         End If
+                        Dim t As Single = grdEntradas.SumarCol(grdEntradas.ColIndex("Importe"), False)
+                        lblSuma.Text = "Suma: " & t
                     Else
                         If .Texto(f, cSuc) > 0 Then
                             .ActivarCelda(f + 1, cSuc)
@@ -336,12 +342,18 @@
 
     Private Sub Cargar_Entradas()
         Fecha = mntFecha.SelectionStart.Date
-        Dim s As String
-        s = $"SELECT Id, Suc, Fecha, Id_Tipo, Nombre AS Descripcion, Importe, Acreditado FROM vw_EntradasTarjeta WHERE Fecha<={Fecha.Fecha_SQL} ORDER BY Id"
+        Dim s As String, suc As String
+        suc = cSucs.DevolverCadena("Suc")
+        If suc.Length Then suc = " AND " & suc
+        s = $"SELECT Id, Suc, Fecha, Id_Tipo, Nombre AS Descripcion, Importe, Acreditado FROM vw_EntradasTarjeta WHERE Fecha={Fecha.Fecha_SQL}{suc} ORDER BY Id"
 
         Dim dt As DataTable = dbG.Datos(s)
-        grdEntradas.MostrarDatos(dt, False)
+        grdEntradas.MostrarDatos(dt, True)
+
+        Formato_Entradas()
         grdEntradas.ActivarCelda(grdEntradas.Rows - 1, cSuc)
+        Dim t As Single = grdEntradas.SumarCol(grdEntradas.ColIndex("Importe"), False)
+        lblSuma.Text = "Suma: " & t
     End Sub
     Private Sub Cargar_Gastos()
         Fecha = mntFecha.SelectionStart.Date
@@ -351,5 +363,12 @@
         Dim dt As DataTable = dbG.Datos(s)
         grdGastos.MostrarDatos(dt, False)
         grdGastos.ActivarCelda(grdGastos.Rows - 1, cSuc)
+    End Sub
+
+    Private Sub cmdLimpiar_Click(sender As Object, e As EventArgs) Handles cmdLimpiar.Click
+        grdEntradas.Rows = 1
+        grdEntradas.Rows = 2
+        grdGastos.Rows = 1
+        grdGastos.Rows = 2
     End Sub
 End Class

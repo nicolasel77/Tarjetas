@@ -33,8 +33,11 @@
     Private Sub Entradas()
         Dim f1 As Date = cFecha.ValorActual
         Dim f2 As Date = cFecha.ValorActualHasta
+        Dim vSuc As String = Sucs.DevolverCadena("Suc")
 
-        Dim s As String = "SELECT {0} FROM vw_EntradasTarjeta WHERE Fecha BETWEEN {1} AND {2} {3} {4} {5}"
+        If vSuc.Length Then vSuc = " AND " & vSuc
+
+        Dim s As String = "SELECT {0} FROM vw_EntradasTarjeta WHERE Fecha BETWEEN {1} AND {2} {3} {4} {5} {6}"
         Dim Campos As String = "", groupby As String = "", acreditado As String = " AND Acreditado=1", tipoe As String = ""
 
         If chAcreditado.Checked = False Then acreditado = ""
@@ -57,10 +60,10 @@
             groupby = "GROUP BY " & Campos
             Unir(Campos, "SUM(Importe) AS Total", ", ")
 
-            s = String.Format(s, Campos, f1.Fecha_SQL, f2.Fecha_SQL, acreditado, tipoe, groupby)
+            s = String.Format(s, Campos, f1.Fecha_SQL, f2.Fecha_SQL, acreditado, tipoe, vSuc, groupby)
         Else
             Campos = "*"
-            s = String.Format(s & "ORDER BY Id", Campos, f1.Fecha_SQL, f2.Fecha_SQL, acreditado, tipoe, "")
+            s = String.Format(s & "ORDER BY Id", Campos, f1.Fecha_SQL, f2.Fecha_SQL, acreditado, tipoe, vSuc, "")
         End If
 
         Dim dt As DataTable = db.Datos(s)

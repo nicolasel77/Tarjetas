@@ -45,6 +45,7 @@ Partial Class frmResumen
         Me.Label4 = New System.Windows.Forms.Label()
         Me.cmdCargar = New System.Windows.Forms.Button()
         Me.cFecha = New Calendario.Calendario()
+        Me.Sucs = New Sucursales.Sucursales()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -106,7 +107,7 @@ Partial Class frmResumen
         Me.grdGastos.Redraw = True
         Me.grdGastos.Row = 0
         Me.grdGastos.Rows = 50
-        Me.grdGastos.Size = New System.Drawing.Size(363, 360)
+        Me.grdGastos.Size = New System.Drawing.Size(363, 391)
         Me.grdGastos.TabIndex = 6
         '
         'grdEntradas
@@ -140,7 +141,7 @@ Partial Class frmResumen
         Me.grdEntradas.Redraw = True
         Me.grdEntradas.Row = 0
         Me.grdEntradas.Rows = 50
-        Me.grdEntradas.Size = New System.Drawing.Size(409, 360)
+        Me.grdEntradas.Size = New System.Drawing.Size(409, 391)
         Me.grdEntradas.TabIndex = 5
         '
         'SplitContainer1
@@ -157,10 +158,11 @@ Partial Class frmResumen
         '
         'SplitContainer1.Panel2
         '
+        Me.SplitContainer1.Panel2.Controls.Add(Me.Sucs)
         Me.SplitContainer1.Panel2.Controls.Add(Me.cmdCargar)
         Me.SplitContainer1.Panel2.Controls.Add(Me.cFecha)
-        Me.SplitContainer1.Size = New System.Drawing.Size(1216, 669)
-        Me.SplitContainer1.SplitterDistance = 964
+        Me.SplitContainer1.Size = New System.Drawing.Size(1276, 724)
+        Me.SplitContainer1.SplitterDistance = 1011
         Me.SplitContainer1.TabIndex = 12
         '
         'SplitContainer2
@@ -193,8 +195,8 @@ Partial Class frmResumen
         Me.SplitContainer2.Panel2.Controls.Add(Me.grdSaldias)
         Me.SplitContainer2.Panel2.Controls.Add(Me.Label5)
         Me.SplitContainer2.Panel2.Controls.Add(Me.Label4)
-        Me.SplitContainer2.Size = New System.Drawing.Size(964, 669)
-        Me.SplitContainer2.SplitterDistance = 389
+        Me.SplitContainer2.Size = New System.Drawing.Size(1011, 724)
+        Me.SplitContainer2.SplitterDistance = 420
         Me.SplitContainer2.TabIndex = 0
         '
         'lstTiposE
@@ -206,7 +208,7 @@ Partial Class frmResumen
         Me.lstTiposE.Location = New System.Drawing.Point(418, 171)
         Me.lstTiposE.Name = "lstTiposE"
         Me.lstTiposE.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple
-        Me.lstTiposE.Size = New System.Drawing.Size(111, 208)
+        Me.lstTiposE.Size = New System.Drawing.Size(111, 234)
         Me.lstTiposE.TabIndex = 13
         '
         'chAcreditado
@@ -349,7 +351,7 @@ Partial Class frmResumen
         Me.grdSaldos.FuenteEncabezado = Nothing
         Me.grdSaldos.FuentePieDePagina = Nothing
         Me.grdSaldos.KeyActionEnter = C1.Win.C1FlexGrid.KeyActionEnum.None
-        Me.grdSaldos.Location = New System.Drawing.Point(632, 31)
+        Me.grdSaldos.Location = New System.Drawing.Point(679, 31)
         Me.grdSaldos.MenuActivado = False
         Me.grdSaldos.Name = "grdSaldos"
         Me.grdSaldos.PieDePagina = "" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & "Page {0} of {1}"
@@ -357,7 +359,7 @@ Partial Class frmResumen
         Me.grdSaldos.Redraw = True
         Me.grdSaldos.Row = 0
         Me.grdSaldos.Rows = 50
-        Me.grdSaldos.Size = New System.Drawing.Size(329, 245)
+        Me.grdSaldos.Size = New System.Drawing.Size(329, 269)
         Me.grdSaldos.TabIndex = 5
         '
         'grdSaldias
@@ -392,14 +394,14 @@ Partial Class frmResumen
         Me.grdSaldias.Redraw = True
         Me.grdSaldias.Row = 0
         Me.grdSaldias.Rows = 50
-        Me.grdSaldias.Size = New System.Drawing.Size(606, 245)
+        Me.grdSaldias.Size = New System.Drawing.Size(653, 269)
         Me.grdSaldias.TabIndex = 5
         '
         'Label5
         '
         Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(632, 5)
+        Me.Label5.Location = New System.Drawing.Point(679, 5)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(329, 23)
         Me.Label5.TabIndex = 10
@@ -413,7 +415,7 @@ Partial Class frmResumen
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(3, 5)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(606, 23)
+        Me.Label4.Size = New System.Drawing.Size(653, 23)
         Me.Label4.TabIndex = 10
         Me.Label4.Text = "Salidas"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -423,9 +425,9 @@ Partial Class frmResumen
         Me.cmdCargar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmdCargar.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.cmdCargar.Location = New System.Drawing.Point(7, 623)
+        Me.cmdCargar.Location = New System.Drawing.Point(7, 678)
         Me.cmdCargar.Name = "cmdCargar"
-        Me.cmdCargar.Size = New System.Drawing.Size(236, 41)
+        Me.cmdCargar.Size = New System.Drawing.Size(249, 41)
         Me.cmdCargar.TabIndex = 10
         Me.cmdCargar.Text = "Cargar"
         Me.cmdCargar.UseVisualStyleBackColor = True
@@ -435,7 +437,7 @@ Partial Class frmResumen
         Me.cFecha.Base = Nothing
         Me.cFecha.CampoFecha = "Fecha"
         Me.cFecha.Checked = True
-        Me.cFecha.FechaSeleccionada = New Date(2020, 3, 16, 0, 0, 0, 0)
+        Me.cFecha.FechaSeleccionada = New Date(2020, 5, 25, 0, 0, 0, 0)
         Me.cFecha.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cFecha.Location = New System.Drawing.Point(7, 0)
         Me.cFecha.Name = "cFecha"
@@ -446,11 +448,24 @@ Partial Class frmResumen
         Me.cFecha.TipoOpcion = Calendario.Calendario.TipoOpcionEnum.Semana
         Me.cFecha.ValorActual = New Date(2003, 1, 1, 0, 0, 0, 0)
         '
+        'Sucs
+        '
+        Me.Sucs.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Sucs.Filtro_Tabla = ""
+        Me.Sucs.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Sucs.Location = New System.Drawing.Point(7, 272)
+        Me.Sucs.Name = "Sucs"
+        Me.Sucs.Size = New System.Drawing.Size(249, 400)
+        Me.Sucs.TabIndex = 11
+        Me.Sucs.Titulo = "Sucursales"
+        '
         'frmResumen
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1240, 693)
+        Me.ClientSize = New System.Drawing.Size(1300, 748)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Name = "frmResumen"
         Me.Text = "Resumen"
@@ -488,4 +503,5 @@ Partial Class frmResumen
     Friend WithEvents chGFecha As CheckBox
     Friend WithEvents chGSuc As CheckBox
     Friend WithEvents lstTiposE As ListBox
+    Friend WithEvents Sucs As Sucursales.Sucursales
 End Class
