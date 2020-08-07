@@ -40,6 +40,9 @@ Partial Class frmEntradas
         Me.chRepetirTipo = New System.Windows.Forms.CheckBox()
         Me.cSucs = New Sucursales.Sucursales()
         Me.cmdLimpiar = New System.Windows.Forms.Button()
+        Me.dtSemana = New System.Windows.Forms.DateTimePicker()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.lblNada = New System.Windows.Forms.ToolStripStatusLabel()
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -79,7 +82,7 @@ Partial Class frmEntradas
         '
         'StatusStrip1
         '
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblSaldo, Me.lblSuma})
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblSaldo, Me.lblSuma, Me.lblNada})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 608)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(1272, 22)
@@ -259,12 +262,37 @@ Partial Class frmEntradas
         Me.cmdLimpiar.Text = "Limpiar"
         Me.cmdLimpiar.UseVisualStyleBackColor = True
         '
+        'dtSemana
+        '
+        Me.dtSemana.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtSemana.Location = New System.Drawing.Point(933, 352)
+        Me.dtSemana.Name = "dtSemana"
+        Me.dtSemana.ShowCheckBox = True
+        Me.dtSemana.Size = New System.Drawing.Size(123, 20)
+        Me.dtSemana.TabIndex = 11
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(852, 358)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(81, 13)
+        Me.Label5.TabIndex = 12
+        Me.Label5.Text = "Cargar semana:"
+        '
+        'lblNada
+        '
+        Me.lblNada.Name = "lblNada"
+        Me.lblNada.Size = New System.Drawing.Size(0, 17)
+        '
         'frmEntradas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1272, 630)
         Me.ControlBox = False
+        Me.Controls.Add(Me.Label5)
+        Me.Controls.Add(Me.dtSemana)
         Me.Controls.Add(Me.cmdLimpiar)
         Me.Controls.Add(Me.cSucs)
         Me.Controls.Add(Me.chRepetirTipo)
@@ -307,4 +335,7 @@ Partial Class frmEntradas
     Friend WithEvents lblSaldo As ToolStripStatusLabel
     Friend WithEvents lblSuma As ToolStripStatusLabel
     Friend WithEvents cmdLimpiar As Button
+    Friend WithEvents dtSemana As DateTimePicker
+    Friend WithEvents Label5 As Label
+    Friend WithEvents lblNada As ToolStripStatusLabel
 End Class

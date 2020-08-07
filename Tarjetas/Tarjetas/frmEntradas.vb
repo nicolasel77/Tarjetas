@@ -160,8 +160,19 @@
                                 Else
                                     .Texto(f + 1, cSuc) = .Texto(f, cSuc)
                                 End If
+
                                 If rdFecha.Checked Then
-                                    .Texto(f + 1, cFecha) = CDate(.Texto(f, cFecha)).AddDays(1)
+                                    If dtSemana.Checked Then
+                                        Dim vF As Date = .Texto(f, cFecha)
+
+                                        lblNada.Text = $"vF: {vF.ToShortDateString }  *  dt: {dtSemana.Value.Date} * Dif:{DateDiff(DateInterval.Day, dtSemana.Value.Date, vF)}"
+                                        If DateDiff(DateInterval.Day, dtSemana.Value, vF) = 5 Then
+                                            .Texto(f + 1, cFecha) = dtSemana.Value
+                                            .Texto(f + 1, cSuc) = Siguiente_Sucursal(.Texto(f, cSuc))
+                                        Else
+                                            .Texto(f + 1, cFecha) = CDate(.Texto(f, cFecha)).AddDays(1)
+                                        End If
+                                    End If
                                 Else
                                     .Texto(f + 1, cFecha) = .Texto(f, cFecha)
                                 End If
@@ -218,9 +229,9 @@
     End Sub
 
     Private Function Siguiente_Sucursal(v As Object) As Int16
-        Dim s As String = db.BuscarDato($"SELECT TOP 1 Sucursal FROM Sucursales WHERE Tarjeta=1 AND Sucursal>{v} ORDER BY Sucursal")
+        Dim s As String = db.BuscarDato($"SELECT TOP 1 Sucursal FROM dbM.dbo.Sucursales WHERE Tarjeta=1 AND Sucursal>{v} ORDER BY Sucursal")
         If s = "" Then
-            s = db.BuscarDato($"SELECT TOP 1 Sucursal FROM Sucursales WHERE Tarjeta=1 ORDER BY Sucursal")
+            s = db.BuscarDato($"SELECT TOP 1 Sucursal FROM dbM.dbo.Sucursales WHERE Tarjeta=1 ORDER BY Sucursal")
         End If
         If s = "" Then
             Return 0
