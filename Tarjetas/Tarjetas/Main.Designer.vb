@@ -25,12 +25,13 @@ Partial Class frmMain
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.EntradasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ResumenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LeerDatosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EntradasToolStripMenuItem, Me.ResumenToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EntradasToolStripMenuItem, Me.ResumenToolStripMenuItem, Me.LeerDatosToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Size = New System.Drawing.Size(1410, 24)
@@ -48,6 +49,12 @@ Partial Class frmMain
         Me.ResumenToolStripMenuItem.Name = "ResumenToolStripMenuItem"
         Me.ResumenToolStripMenuItem.Size = New System.Drawing.Size(68, 20)
         Me.ResumenToolStripMenuItem.Text = "Resumen"
+        '
+        'LeerDatosToolStripMenuItem
+        '
+        Me.LeerDatosToolStripMenuItem.Name = "LeerDatosToolStripMenuItem"
+        Me.LeerDatosToolStripMenuItem.Size = New System.Drawing.Size(73, 20)
+        Me.LeerDatosToolStripMenuItem.Text = "Leer datos"
         '
         'frmMain
         '
@@ -70,4 +77,5 @@ Partial Class frmMain
     Friend WithEvents MenuStrip1 As MenuStrip
     Friend WithEvents EntradasToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ResumenToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents LeerDatosToolStripMenuItem As ToolStripMenuItem
 End Class

@@ -19,4 +19,8 @@
         frResumen.Show()
         frResumen.WindowState = FormWindowState.Maximized
     End Sub
+
+    Private Sub LeerDatosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LeerDatosToolStripMenuItem.Click
+
+    End Sub
 End Class
