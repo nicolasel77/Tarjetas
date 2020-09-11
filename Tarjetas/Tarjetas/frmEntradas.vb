@@ -20,7 +20,7 @@
 
     Private Sub frmEntradas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim s As String
-        Dim n() As Integer = {13, 32, 42, 43, 45, 47, 112, 123}
+        Dim n() As Integer = {13, 32, 42, 43, 45, 46, 47, 112, 123}
 
         With grdEntradas
             .TeclasManejadas = n
@@ -381,5 +381,19 @@
         grdEntradas.Rows = 2
         grdGastos.Rows = 1
         grdGastos.Rows = 2
+    End Sub
+
+    Private Sub grdEntradas_KeyUp(sender As Object, e As Short) Handles grdEntradas.KeyUp
+        If e = Keys.Delete Then
+            If MsgBox("Esta seguro de borrar el registro?", MsgBoxStyle.YesNoCancel + MsgBoxStyle.DefaultButton1, "Borrar") = MsgBoxResult.Yes Then
+                With grdEntradas
+                    Dim vId As Integer = .Texto(.Row, .ColIndex("Id"))
+                    If vId Then
+                        db.EjecutarCadena("DELETE FROM Entradas_Tarjeta WHERE Id=" & vId)
+                        grdEntradas.BorrarFila()
+                    End If
+                End With
+            End If
+        End If
     End Sub
 End Class

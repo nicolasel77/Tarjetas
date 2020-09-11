@@ -27,6 +27,7 @@ Partial Class frmEntradas
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.lblSaldo = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lblSuma = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.lblNada = New System.Windows.Forms.ToolStripStatusLabel()
         Me.grdGastos = New Grilla2.SpeedGrilla()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -42,7 +43,6 @@ Partial Class frmEntradas
         Me.cmdLimpiar = New System.Windows.Forms.Button()
         Me.dtSemana = New System.Windows.Forms.DateTimePicker()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.lblNada = New System.Windows.Forms.ToolStripStatusLabel()
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -100,6 +100,11 @@ Partial Class frmEntradas
         Me.lblSuma.Name = "lblSuma"
         Me.lblSuma.Size = New System.Drawing.Size(37, 17)
         Me.lblSuma.Text = "Suma"
+        '
+        'lblNada
+        '
+        Me.lblNada.Name = "lblNada"
+        Me.lblNada.Size = New System.Drawing.Size(0, 17)
         '
         'grdGastos
         '
@@ -279,11 +284,6 @@ Partial Class frmEntradas
         Me.Label5.Size = New System.Drawing.Size(81, 13)
         Me.Label5.TabIndex = 12
         Me.Label5.Text = "Cargar semana:"
-        '
-        'lblNada
-        '
-        Me.lblNada.Name = "lblNada"
-        Me.lblNada.Size = New System.Drawing.Size(0, 17)
         '
         'frmEntradas
         '
