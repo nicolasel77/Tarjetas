@@ -32,15 +32,16 @@ Partial Class frmLeer
         Me.cmdGuardar = New System.Windows.Forms.Button()
         Me.lblTotal = New System.Windows.Forms.Label()
         Me.lblSucursal = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.grdCuentas = New Grilla2.SpeedGrilla()
         Me.SuspendLayout()
         '
         'grdDatos
         '
         Me.grdDatos.AllowMerging = C1.Win.C1FlexGrid.AllowMergingEnum.None
         Me.grdDatos.AllowSorting = C1.Win.C1FlexGrid.AllowSortingEnum.SingleColumn
-        Me.grdDatos.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.grdDatos.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.grdDatos.AutoResize = False
         Me.grdDatos.bColor = System.Drawing.SystemColors.Window
         Me.grdDatos.bColorSel = System.Drawing.SystemColors.Highlight
@@ -66,12 +67,11 @@ Partial Class frmLeer
         Me.grdDatos.Redraw = True
         Me.grdDatos.Row = 0
         Me.grdDatos.Rows = 50
-        Me.grdDatos.Size = New System.Drawing.Size(756, 650)
+        Me.grdDatos.Size = New System.Drawing.Size(756, 635)
         Me.grdDatos.TabIndex = 0
         '
         'cmdLeer
         '
-        Me.cmdLeer.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmdLeer.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.cmdLeer.Location = New System.Drawing.Point(783, 12)
         Me.cmdLeer.Name = "cmdLeer"
@@ -82,17 +82,17 @@ Partial Class frmLeer
         '
         'lstTipo
         '
-        Me.lstTipo.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lstTipo.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.lstTipo.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lstTipo.FormattingEnabled = True
+        Me.lstTipo.ItemHeight = 20
         Me.lstTipo.Location = New System.Drawing.Point(783, 99)
         Me.lstTipo.Name = "lstTipo"
-        Me.lstTipo.Size = New System.Drawing.Size(120, 169)
+        Me.lstTipo.Size = New System.Drawing.Size(166, 160)
         Me.lstTipo.TabIndex = 2
         '
         'Label1
         '
-        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(780, 83)
         Me.Label1.Name = "Label1"
@@ -102,7 +102,8 @@ Partial Class frmLeer
         '
         'lblArchivo
         '
-        Me.lblArchivo.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblArchivo.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblArchivo.AutoSize = True
         Me.lblArchivo.Location = New System.Drawing.Point(910, 17)
         Me.lblArchivo.Name = "lblArchivo"
@@ -111,7 +112,6 @@ Partial Class frmLeer
         '
         'cmdEscribir
         '
-        Me.cmdEscribir.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmdEscribir.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.cmdEscribir.Location = New System.Drawing.Point(783, 54)
         Me.cmdEscribir.Name = "cmdEscribir"
@@ -122,7 +122,6 @@ Partial Class frmLeer
         '
         'cmdGuardar
         '
-        Me.cmdGuardar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmdGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.cmdGuardar.Location = New System.Drawing.Point(783, 290)
         Me.cmdGuardar.Name = "cmdGuardar"
@@ -133,16 +132,16 @@ Partial Class frmLeer
         '
         'lblTotal
         '
-        Me.lblTotal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblTotal.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblTotal.AutoSize = True
-        Me.lblTotal.Location = New System.Drawing.Point(780, 271)
+        Me.lblTotal.Location = New System.Drawing.Point(781, 274)
         Me.lblTotal.Name = "lblTotal"
         Me.lblTotal.Size = New System.Drawing.Size(0, 13)
         Me.lblTotal.TabIndex = 3
         '
         'lblSucursal
         '
-        Me.lblSucursal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblSucursal.AutoSize = True
         Me.lblSucursal.Location = New System.Drawing.Point(780, 38)
         Me.lblSucursal.Name = "lblSucursal"
@@ -150,14 +149,60 @@ Partial Class frmLeer
         Me.lblSucursal.TabIndex = 3
         Me.lblSucursal.Text = "Sucursal"
         '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(781, 349)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(46, 13)
+        Me.Label2.TabIndex = 3
+        Me.Label2.Text = "Cuentas"
+        '
+        'grdCuentas
+        '
+        Me.grdCuentas.AllowMerging = C1.Win.C1FlexGrid.AllowMergingEnum.None
+        Me.grdCuentas.AllowSorting = C1.Win.C1FlexGrid.AllowSortingEnum.SingleColumn
+        Me.grdCuentas.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.grdCuentas.AutoResize = False
+        Me.grdCuentas.bColor = System.Drawing.SystemColors.Window
+        Me.grdCuentas.bColorSel = System.Drawing.SystemColors.Highlight
+        Me.grdCuentas.bFColor = System.Drawing.SystemColors.WindowText
+        Me.grdCuentas.bFColorSel = System.Drawing.SystemColors.HighlightText
+        Me.grdCuentas.Col = 0
+        Me.grdCuentas.Cols = 10
+        Me.grdCuentas.DataMember = ""
+        Me.grdCuentas.DataSource = Nothing
+        Me.grdCuentas.EnableEdicion = True
+        Me.grdCuentas.Encabezado = ""
+        Me.grdCuentas.fColor = System.Drawing.SystemColors.Control
+        Me.grdCuentas.FixCols = 0
+        Me.grdCuentas.FixRows = 0
+        Me.grdCuentas.FuenteEncabezado = Nothing
+        Me.grdCuentas.FuentePieDePagina = Nothing
+        Me.grdCuentas.KeyActionEnter = C1.Win.C1FlexGrid.KeyActionEnum.None
+        Me.grdCuentas.Location = New System.Drawing.Point(783, 369)
+        Me.grdCuentas.MenuActivado = False
+        Me.grdCuentas.Name = "grdCuentas"
+        Me.grdCuentas.PieDePagina = "" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & "Page {0} of {1}"
+        Me.grdCuentas.PintarFilaSel = True
+        Me.grdCuentas.Redraw = True
+        Me.grdCuentas.Row = 0
+        Me.grdCuentas.Rows = 50
+        Me.grdCuentas.Size = New System.Drawing.Size(458, 277)
+        Me.grdCuentas.TabIndex = 5
+        '
         'frmLeer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1308, 674)
+        Me.ClientSize = New System.Drawing.Size(1253, 659)
+        Me.Controls.Add(Me.grdCuentas)
         Me.Controls.Add(Me.lblArchivo)
         Me.Controls.Add(Me.lblTotal)
         Me.Controls.Add(Me.lblSucursal)
+        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.cmdGuardar)
         Me.Controls.Add(Me.cmdEscribir)
@@ -180,4 +225,6 @@ Partial Class frmLeer
     Friend WithEvents cmdGuardar As Button
     Friend WithEvents lblTotal As Label
     Friend WithEvents lblSucursal As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents grdCuentas As Grilla2.SpeedGrilla
 End Class

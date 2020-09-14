@@ -8,6 +8,9 @@
         grdDatos.MostrarDatos(dt, True)
         grdDatos.AutosizeAll()
         grdDatos.ColW(0) = 0
+
+        grdCuentas.MostrarDatos(db.Datos("SELECT * FROM vw_SucCuentas ORDER BY Suc, Tipo"), True, False)
+        grdCuentas.AutosizeAll()
     End Sub
     Private Sub cmdLeer_Click(sender As Object, e As EventArgs) Handles cmdLeer.Click
         Dim f As New OpenFileDialog()
@@ -22,6 +25,8 @@
             n = n.Substring(0, n.LastIndexOf(" "))
             s = db.BuscarDato("SELECT Nombre FROM Sucursales WHERE Sucursal=" & n)
             lblSucursal.Text = s
+
+            If lstTipo.SelectedIndex > -1 Then cmdEscribir.PerformClick()
         End If
 
     End Sub
@@ -171,5 +176,9 @@
         Mover_Archivo()
 
         Me.Cursor = Cursors.Default
+    End Sub
+
+    Private Sub lstTipo_DoubleClick(sender As Object, e As EventArgs) Handles lstTipo.DoubleClick
+        cmdLeer.PerformClick()
     End Sub
 End Class
