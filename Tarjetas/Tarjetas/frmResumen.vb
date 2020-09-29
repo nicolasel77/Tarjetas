@@ -37,8 +37,8 @@
 
         If vSuc.Length Then vSuc = " AND " & vSuc
 
-        Dim s As String = "SELECT {0} FROM vw_EntradasTarjeta WHERE Fecha BETWEEN {1} AND {2} {3} {4} {5} {6}"
-        Dim Campos As String = "", groupby As String = "", acreditado As String = " AND Acreditado=1", tipoe As String = ""
+        Dim s As String = "SELECT {0} FROM vw_EntradasTarjeta WHERE Fecha BETWEEN {1} AND {2} {3} {4} {5} {6} {7}"
+        Dim Campos As String = "", groupby As String = "", acreditado As String = " AND Acreditado=1", tipoe As String = "", orden As String = ""
 
         If chAcreditado.Checked = False Then acreditado = ""
         tipoe = Codigos_Seleccionados(lstTiposE, "Id_Tipo")
@@ -58,12 +58,14 @@
             End If
 
             groupby = "GROUP BY " & Campos
+            orden = " ORDER BY " & Campos
+
             Unir(Campos, "SUM(Importe) AS Total", ", ")
 
-            s = String.Format(s, Campos, f1.Fecha_SQL, f2.Fecha_SQL, acreditado, tipoe, vSuc, groupby)
+            s = String.Format(s, Campos, f1.Fecha_SQL, f2.Fecha_SQL, acreditado, tipoe, vSuc, groupby, orden)
         Else
             Campos = "*"
-            s = String.Format(s & "ORDER BY Id", Campos, f1.Fecha_SQL, f2.Fecha_SQL, acreditado, tipoe, vSuc, "")
+            s = String.Format(s & "ORDER BY Id", Campos, f1.Fecha_SQL, f2.Fecha_SQL, acreditado, tipoe, vSuc, "", orden)
         End If
 
         Dim dt As DataTable = db.Datos(s)
