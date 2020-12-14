@@ -22,8 +22,8 @@ Partial Class frmLeer
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmLeer))
-        Me.grdDatos = New Grilla2.SpeedGrilla()
         Me.cmdLeer = New System.Windows.Forms.Button()
         Me.lstTipo = New System.Windows.Forms.ListBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -33,42 +33,13 @@ Partial Class frmLeer
         Me.lblTotal = New System.Windows.Forms.Label()
         Me.lblSucursal = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.chAuto = New System.Windows.Forms.CheckBox()
+        Me.tiAuto = New System.Windows.Forms.Timer(Me.components)
+        Me.cmdCarpeta = New System.Windows.Forms.Button()
         Me.grdCuentas = New Grilla2.SpeedGrilla()
+        Me.grdDatos = New Grilla2.SpeedGrilla()
+        Me.cmdGuardado = New System.Windows.Forms.Button()
         Me.SuspendLayout()
-        '
-        'grdDatos
-        '
-        Me.grdDatos.AllowMerging = C1.Win.C1FlexGrid.AllowMergingEnum.None
-        Me.grdDatos.AllowSorting = C1.Win.C1FlexGrid.AllowSortingEnum.SingleColumn
-        Me.grdDatos.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.grdDatos.AutoResize = False
-        Me.grdDatos.bColor = System.Drawing.SystemColors.Window
-        Me.grdDatos.bColorSel = System.Drawing.SystemColors.Highlight
-        Me.grdDatos.bFColor = System.Drawing.SystemColors.WindowText
-        Me.grdDatos.bFColorSel = System.Drawing.SystemColors.HighlightText
-        Me.grdDatos.Col = 0
-        Me.grdDatos.Cols = 10
-        Me.grdDatos.DataMember = ""
-        Me.grdDatos.DataSource = Nothing
-        Me.grdDatos.EnableEdicion = True
-        Me.grdDatos.Encabezado = ""
-        Me.grdDatos.fColor = System.Drawing.SystemColors.Control
-        Me.grdDatos.FixCols = 0
-        Me.grdDatos.FixRows = 0
-        Me.grdDatos.FuenteEncabezado = Nothing
-        Me.grdDatos.FuentePieDePagina = Nothing
-        Me.grdDatos.KeyActionEnter = C1.Win.C1FlexGrid.KeyActionEnum.None
-        Me.grdDatos.Location = New System.Drawing.Point(12, 12)
-        Me.grdDatos.MenuActivado = False
-        Me.grdDatos.Name = "grdDatos"
-        Me.grdDatos.PieDePagina = "" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & "Page {0} of {1}"
-        Me.grdDatos.PintarFilaSel = True
-        Me.grdDatos.Redraw = True
-        Me.grdDatos.Row = 0
-        Me.grdDatos.Rows = 50
-        Me.grdDatos.Size = New System.Drawing.Size(756, 635)
-        Me.grdDatos.TabIndex = 0
         '
         'cmdLeer
         '
@@ -158,6 +129,32 @@ Partial Class frmLeer
         Me.Label2.TabIndex = 3
         Me.Label2.Text = "Cuentas"
         '
+        'chAuto
+        '
+        Me.chAuto.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chAuto.AutoSize = True
+        Me.chAuto.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.chAuto.Location = New System.Drawing.Point(1195, 12)
+        Me.chAuto.Name = "chAuto"
+        Me.chAuto.Size = New System.Drawing.Size(46, 17)
+        Me.chAuto.TabIndex = 6
+        Me.chAuto.Text = "Auto"
+        Me.chAuto.UseVisualStyleBackColor = True
+        '
+        'tiAuto
+        '
+        Me.tiAuto.Interval = 5000
+        '
+        'cmdCarpeta
+        '
+        Me.cmdCarpeta.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.cmdCarpeta.Location = New System.Drawing.Point(783, 319)
+        Me.cmdCarpeta.Name = "cmdCarpeta"
+        Me.cmdCarpeta.Size = New System.Drawing.Size(121, 23)
+        Me.cmdCarpeta.TabIndex = 1
+        Me.cmdCarpeta.Text = "Carpeta"
+        Me.cmdCarpeta.UseVisualStyleBackColor = True
+        '
         'grdCuentas
         '
         Me.grdCuentas.AllowMerging = C1.Win.C1FlexGrid.AllowMergingEnum.None
@@ -193,17 +190,65 @@ Partial Class frmLeer
         Me.grdCuentas.Size = New System.Drawing.Size(458, 277)
         Me.grdCuentas.TabIndex = 5
         '
+        'grdDatos
+        '
+        Me.grdDatos.AllowMerging = C1.Win.C1FlexGrid.AllowMergingEnum.None
+        Me.grdDatos.AllowSorting = C1.Win.C1FlexGrid.AllowSortingEnum.SingleColumn
+        Me.grdDatos.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.grdDatos.AutoResize = False
+        Me.grdDatos.bColor = System.Drawing.SystemColors.Window
+        Me.grdDatos.bColorSel = System.Drawing.SystemColors.Highlight
+        Me.grdDatos.bFColor = System.Drawing.SystemColors.WindowText
+        Me.grdDatos.bFColorSel = System.Drawing.SystemColors.HighlightText
+        Me.grdDatos.Col = 0
+        Me.grdDatos.Cols = 10
+        Me.grdDatos.DataMember = ""
+        Me.grdDatos.DataSource = Nothing
+        Me.grdDatos.EnableEdicion = True
+        Me.grdDatos.Encabezado = ""
+        Me.grdDatos.fColor = System.Drawing.SystemColors.Control
+        Me.grdDatos.FixCols = 0
+        Me.grdDatos.FixRows = 0
+        Me.grdDatos.FuenteEncabezado = Nothing
+        Me.grdDatos.FuentePieDePagina = Nothing
+        Me.grdDatos.KeyActionEnter = C1.Win.C1FlexGrid.KeyActionEnum.None
+        Me.grdDatos.Location = New System.Drawing.Point(12, 12)
+        Me.grdDatos.MenuActivado = False
+        Me.grdDatos.Name = "grdDatos"
+        Me.grdDatos.PieDePagina = "" & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & "Page {0} of {1}"
+        Me.grdDatos.PintarFilaSel = True
+        Me.grdDatos.Redraw = True
+        Me.grdDatos.Row = 0
+        Me.grdDatos.Rows = 50
+        Me.grdDatos.Size = New System.Drawing.Size(756, 635)
+        Me.grdDatos.TabIndex = 0
+        '
+        'cmdGuardado
+        '
+        Me.cmdGuardado.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmdGuardado.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.cmdGuardado.Location = New System.Drawing.Point(913, 319)
+        Me.cmdGuardado.Name = "cmdGuardado"
+        Me.cmdGuardado.Size = New System.Drawing.Size(328, 23)
+        Me.cmdGuardado.TabIndex = 1
+        Me.cmdGuardado.UseVisualStyleBackColor = True
+        '
         'frmLeer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1253, 659)
+        Me.Controls.Add(Me.chAuto)
         Me.Controls.Add(Me.grdCuentas)
         Me.Controls.Add(Me.lblArchivo)
         Me.Controls.Add(Me.lblTotal)
         Me.Controls.Add(Me.lblSucursal)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.cmdGuardado)
+        Me.Controls.Add(Me.cmdCarpeta)
         Me.Controls.Add(Me.cmdGuardar)
         Me.Controls.Add(Me.cmdEscribir)
         Me.Controls.Add(Me.lstTipo)
@@ -227,4 +272,8 @@ Partial Class frmLeer
     Friend WithEvents lblSucursal As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents grdCuentas As Grilla2.SpeedGrilla
+    Friend WithEvents chAuto As CheckBox
+    Friend WithEvents tiAuto As Timer
+    Friend WithEvents cmdCarpeta As Button
+    Friend WithEvents cmdGuardado As Button
 End Class

@@ -3,6 +3,14 @@
     Private dt As DataTable = db.Datos("SELECT * FROM Entradas_Tarjeta WHERE ID=-1")
 
     Private Sub frmLeer_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Dim s As String = db.BuscarDato("SELECT TOP 1 Valor FROM Varios.dbo.Varios WHERE Dato='fCarpeta'")
+        If s.Length = 0 Then
+            db.EjecutarCadena($"INSERT INTO Varios.dbo.Varios (Dato, Valor) VALUES ('fCarpeta', '{fCarpeta}')")
+        Else
+            fCarpeta = s
+        End If
+
+        cmdCarpeta.Text = "Carpeta: " & fCarpeta
         Llenar_List(lstTipo, "dbGastos.dbo.Tipo_Cuentas")
 
         grdDatos.MostrarDatos(dt, True)
@@ -11,6 +19,9 @@
 
         grdCuentas.MostrarDatos(db.Datos("SELECT * FROM vw_SucCuentas ORDER BY Suc, Tipo"), True, False)
         grdCuentas.AutosizeAll()
+
+        Dim n() As Integer = {13, 32, 42, 43, 45, 46, 47, 112, 123}
+        grdCuentas.TeclasManejadas = n
     End Sub
     Private Sub cmdLeer_Click(sender As Object, e As EventArgs) Handles cmdLeer.Click
         Dim f As New OpenFileDialog()
@@ -36,22 +47,32 @@
         Dim n As String = s.Substring(s.LastIndexOf("\") + 1)
         Dim i As Integer = 1
         n = fCarpeta & "\Back\" & n
-        Dim ex As String = n.Substring(n.LastIndexOf("."))
 
-        While My.Computer.FileSystem.FileExists(n)
-            n = n.Substring(0, n.LastIndexOf("."))
-            n &= i & ex
-            i += 1
-        End While
-        lblArchivo.Text = ""
-        My.Computer.FileSystem.MoveFile(s, n)
+        If n.LastIndexOf(".") > -1 Then
+            Dim ex As String = n.Substring(n.LastIndexOf("."))
+
+            While My.Computer.FileSystem.FileExists(n)
+                n = n.Substring(0, n.LastIndexOf("."))
+                n &= i & ex
+                i += 1
+            End While
+            cmdGuardado.Text = "Guardado: " & n
+            lblArchivo.Text = ""
+
+            My.Computer.FileSystem.MoveFile(s, n)
+        End If
+
     End Sub
 
     Private Sub cmdEscribir_Click(sender As Object, e As EventArgs) Handles cmdEscribir.Click
+        Escribir()
+    End Sub
+
+    Private Sub Escribir(Optional Tipo As String = "")
         Me.Cursor = Cursors.WaitCursor
         lblTotal.Text = ""
         If lblArchivo.Text.Length Then
-            If lstTipo.SelectedIndex > -1 Then
+            If lstTipo.SelectedIndex > -1 Or Tipo.Length > 0 Then
                 Dim s As String = lblArchivo.Text
                 Dim Suc As String = s.Substring(s.LastIndexOf("\") + 1)
                 Suc = Suc.Substring(0, Suc.LastIndexOf(" "))
@@ -76,6 +97,8 @@
                 Dim vTipo As Integer = lstTipo.Text.Codigo_Seleccionado
                 Dim vImporte As String
                 Dim vPago As String
+
+                If Tipo.Length Then vTipo = Tipo
 
                 dt.Rows.Clear()
                 For i As Integer = 2 To 500000
@@ -132,6 +155,9 @@
                 xLibro = Nothing
                 xLibros = Nothing
                 xApp = Nothing
+
+                Application.DoEvents()
+                If chAuto.Checked Then cmdGuardar.PerformClick()
             Else
                 MsgBox("Debe seleccionar el tipo de tarjeta.")
             End If
@@ -180,5 +206,47 @@
 
     Private Sub lstTipo_DoubleClick(sender As Object, e As EventArgs) Handles lstTipo.DoubleClick
         cmdLeer.PerformClick()
+    End Sub
+
+    Private Sub chAuto_CheckedChanged(sender As Object, e As EventArgs) Handles chAuto.CheckedChanged
+        tiAuto.Enabled = chAuto.Checked
+    End Sub
+
+    Private Sub tiAuto_Tick(sender As Object, e As EventArgs) Handles tiAuto.Tick
+        Dim f = My.Computer.FileSystem.GetFiles(fCarpeta, FileIO.SearchOption.SearchTopLevelOnly, "*.csv")
+
+        For Each s As String In My.Computer.FileSystem.GetFiles(fCarpeta, FileIO.SearchOption.SearchTopLevelOnly, "*.csv")
+            lblArchivo.Text = s
+            Dim n As String = s.Substring(s.LastIndexOf("\") + 1)
+
+            Dim t As String = s.Substring(s.LastIndexOf(" ") + 1)
+            t = t.Substring(0, t.IndexOf("."))
+
+            n = n.Substring(0, n.LastIndexOf(" "))
+
+            s = db.BuscarDato("SELECT Nombre FROM Sucursales WHERE Sucursal=" & n)
+            lblSucursal.Text = s
+
+            Escribir(t)
+        Next
+    End Sub
+
+    Private Sub cmdCarpeta_Click(sender As Object, e As EventArgs) Handles cmdCarpeta.Click
+        Dim fc As New FolderBrowserDialog
+
+        If fc.ShowDialog = DialogResult.OK Then
+            fCarpeta = fc.SelectedPath
+            cmdCarpeta.Text = "Carpeta: " & fCarpeta
+            db.EjecutarCadena("DELETE FROM Varios.dbo.Varios WHERE Dato LIKE 'fCarpeta'")
+            db.EjecutarCadena($"INSERT INTO Varios.dbo.Varios (Dato, Valor) VALUES ('fCarpeta', '{fCarpeta}')")
+        End If
+
+
+    End Sub
+
+    Private Sub grdCuentas_KeyUp(sender As Object, e As Short) Handles grdCuentas.KeyUp
+        If e = Keys.Delete Then
+            grdCuentas.BorrarFila()
+        End If
     End Sub
 End Class
