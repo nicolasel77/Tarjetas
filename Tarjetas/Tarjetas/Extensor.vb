@@ -26,6 +26,17 @@ Module Formulas
         Return a
     End Function
 
+    Public Function Proxima_Sucursal(ByRef Cod As Integer) As String
+        Dim s As String = db.BuscarDato(String.Format("SELECT TOP 1 Sucursal FROM Sucursales WHERE Propio=1 AND Ver=1 AND Sucursal>{0} ORDER BY Sucursal", Cod))
+        If s.Length Then
+            Cod = s
+        Else
+            Cod = db.BuscarDato("SELECT TOP 1 Sucursal FROM Sucursales WHERE Propio=1 AND Ver=1 ORDER BY Sucursal")
+        End If
+        s = db.BuscarDato("SELECT Nombre FROM Sucursales WHERE Propio=1 AND Ver=1 AND Sucursal=" & Cod)
+        Return s
+    End Function
+
     Public Sub Llenar_List(ByRef lst As ListBox, ByVal Tabla As String, Optional ByVal ID As String = "", Optional ByVal Nombre As String = "", Optional ByVal Where As String = "", Optional ByVal Order As String = "")
         If Where.Length Then Where = " WHERE " & Where
         If Order.Length = 0 Then Order = ID

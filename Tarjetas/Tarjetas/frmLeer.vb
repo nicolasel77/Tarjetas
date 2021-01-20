@@ -17,7 +17,7 @@
         grdDatos.AutosizeAll()
         grdDatos.ColW(0) = 0
 
-        grdCuentas.MostrarDatos(db.Datos("SELECT * FROM vw_SucCuentas ORDER BY Suc, Tipo"), True, False)
+        grdCuentas.MostrarDatos(db.Datos("SELECT Carga, Suc, Nombre, RIGHT(N_Cuenta, 4) NCuenta, Tipo, RTRIM(Descripcion) Descripcion, Alias, Titular  FROM vw_SucCuentas ORDER BY Titular, Suc, Tipo"), True, False)
         grdCuentas.AutosizeAll()
 
         Dim n() As Integer = {13, 32, 42, 43, 45, 46, 47, 112, 123}
@@ -59,7 +59,7 @@
             cmdGuardado.Text = "Guardado: " & n
             lblArchivo.Text = ""
 
-            My.Computer.FileSystem.MoveFile(s, n)
+            If My.Computer.FileSystem.FileExists(s) Then My.Computer.FileSystem.MoveFile(s, n)
         End If
 
     End Sub
@@ -156,7 +156,7 @@
                 xLibros = Nothing
                 xApp = Nothing
 
-                Application.DoEvents()
+                'Application.DoEvents()
                 If chAuto.Checked Then cmdGuardar.PerformClick()
             Else
                 MsgBox("Debe seleccionar el tipo de tarjeta.")
@@ -193,6 +193,7 @@
                     , .Texto(i, .ColIndex("Tarjeta")))
 
                 db.EjecutarCadena(s)
+                'Application.DoEvents()
             Next
             .Rows = 1
 
@@ -248,5 +249,13 @@
         If e = Keys.Delete Then
             grdCuentas.BorrarFila()
         End If
+    End Sub
+
+    Private Sub grdCuentas_Editado(f As Short, c As Short, a As Object) Handles grdCuentas.Editado
+        With grdCuentas
+            If c = .ColIndex("Carga") And .Texto(f, .ColIndex("Carga")) = True Then
+                grdCuentas.BorrarFila()
+            End If
+        End With
     End Sub
 End Class

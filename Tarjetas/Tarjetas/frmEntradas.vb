@@ -394,6 +394,16 @@
                     End If
                 End With
             End If
+        ElseIf e = Keys.Enter Then
+            With grdEntradas
+                If .Col = .ColIndex("Importe") Then
+                    If rdFecha.Checked Then
+                        .Texto(.Row, .ColIndex("Fecha")) = CDate(.Texto(.Row, .ColIndex("Fecha"))).AddDays(1)
+                    ElseIf rdSuc.Checked Then
+                        .Texto(.Row, .ColIndex("Suc")) = Proxima_Sucursal(.Texto(.Row, .ColIndex("Suc")))
+                    End If
+                End If
+            End With
         End If
     End Sub
 End Class
