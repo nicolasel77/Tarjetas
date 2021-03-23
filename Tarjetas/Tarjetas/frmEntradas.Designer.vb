@@ -180,13 +180,11 @@ Partial Class frmEntradas
         'rdNada
         '
         Me.rdNada.AutoSize = True
-        Me.rdNada.Checked = True
         Me.rdNada.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.rdNada.Location = New System.Drawing.Point(859, 219)
         Me.rdNada.Name = "rdNada"
         Me.rdNada.Size = New System.Drawing.Size(50, 17)
         Me.rdNada.TabIndex = 5
-        Me.rdNada.TabStop = True
         Me.rdNada.Text = "Nada"
         Me.rdNada.UseVisualStyleBackColor = True
         '
@@ -202,11 +200,13 @@ Partial Class frmEntradas
         'rdFecha
         '
         Me.rdFecha.AutoSize = True
+        Me.rdFecha.Checked = True
         Me.rdFecha.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.rdFecha.Location = New System.Drawing.Point(859, 242)
         Me.rdFecha.Name = "rdFecha"
         Me.rdFecha.Size = New System.Drawing.Size(54, 17)
         Me.rdFecha.TabIndex = 5
+        Me.rdFecha.TabStop = True
         Me.rdFecha.Text = "Fecha"
         Me.rdFecha.UseVisualStyleBackColor = True
         '
@@ -224,6 +224,8 @@ Partial Class frmEntradas
         'chAuto
         '
         Me.chAuto.AutoSize = True
+        Me.chAuto.Checked = True
+        Me.chAuto.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chAuto.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.chAuto.Location = New System.Drawing.Point(859, 329)
         Me.chAuto.Name = "chAuto"
@@ -235,6 +237,8 @@ Partial Class frmEntradas
         'chRepetirTipo
         '
         Me.chRepetirTipo.AutoSize = True
+        Me.chRepetirTipo.Checked = True
+        Me.chRepetirTipo.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chRepetirTipo.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.chRepetirTipo.Location = New System.Drawing.Point(859, 306)
         Me.chRepetirTipo.Name = "chRepetirTipo"

@@ -169,8 +169,8 @@
         Me.Cursor = Cursors.WaitCursor
         Dim vBorrar As String = "DELETE FROM Entradas_Tarjeta WHERE [Fecha]={0} AND [Importe]={1} AND [Suc]={2} AND Lote={3} AND Comprobante={4} AND Tarjeta={5}"
         Dim vAgregar As String = "INSERT INTO Entradas_Tarjeta ([Fecha], [Id_Tipo], [Importe], [Acreditado], [Suc], [Fecha_Pago], Lote, Comprobante, Tarjeta) VALUES({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8})"
+        Dim s As String
         With grdDatos
-            Dim s As String
             For i As Integer = 1 To .Rows - 1
 
                 s = String.Format(vBorrar, FormatearValorAlCornudoDeSql(.Texto(i, .ColIndex("Fecha"))) _
@@ -193,11 +193,11 @@
                     , .Texto(i, .ColIndex("Tarjeta")))
 
                 db.EjecutarCadena(s)
-                'Application.DoEvents()
+                s = $"{ .Texto(1, .ColIndex("Suc"))}  -  { .Texto(1, .ColIndex("Id_Tipo"))}"
             Next
             .Rows = 1
 
-            lblSucursal.Text = ""
+            lblSucursal.Text = s
             lblTotal.Text = ""
         End With
         Mover_Archivo()
@@ -214,22 +214,24 @@
     End Sub
 
     Private Sub tiAuto_Tick(sender As Object, e As EventArgs) Handles tiAuto.Tick
-        Dim f = My.Computer.FileSystem.GetFiles(fCarpeta, FileIO.SearchOption.SearchTopLevelOnly, "*.csv")
+        If My.Computer.FileSystem.DirectoryExists(fCarpeta) Then
+            Dim f = My.Computer.FileSystem.GetFiles(fCarpeta, FileIO.SearchOption.SearchTopLevelOnly, "*.csv")
 
-        For Each s As String In My.Computer.FileSystem.GetFiles(fCarpeta, FileIO.SearchOption.SearchTopLevelOnly, "*.csv")
-            lblArchivo.Text = s
-            Dim n As String = s.Substring(s.LastIndexOf("\") + 1)
+            For Each s As String In My.Computer.FileSystem.GetFiles(fCarpeta, FileIO.SearchOption.SearchTopLevelOnly, "*.csv")
+                lblArchivo.Text = s
+                Dim n As String = s.Substring(s.LastIndexOf("\") + 1)
 
-            Dim t As String = s.Substring(s.LastIndexOf(" ") + 1)
-            t = t.Substring(0, t.IndexOf("."))
+                Dim t As String = s.Substring(s.LastIndexOf(" ") + 1)
+                t = t.Substring(0, t.IndexOf("."))
 
-            n = n.Substring(0, n.LastIndexOf(" "))
+                n = n.Substring(0, n.LastIndexOf(" "))
 
-            s = db.BuscarDato("SELECT Nombre FROM Sucursales WHERE Sucursal=" & n)
-            lblSucursal.Text = s
+                s = db.BuscarDato("SELECT Nombre FROM Sucursales WHERE Sucursal=" & n)
+                lblSucursal.Text = s
 
-            Escribir(t)
-        Next
+                Escribir(t)
+            Next
+        End If
     End Sub
 
     Private Sub cmdCarpeta_Click(sender As Object, e As EventArgs) Handles cmdCarpeta.Click
