@@ -36,9 +36,13 @@ Partial Class frmLeer
         Me.chAuto = New System.Windows.Forms.CheckBox()
         Me.tiAuto = New System.Windows.Forms.Timer(Me.components)
         Me.cmdCarpeta = New System.Windows.Forms.Button()
+        Me.cmdGuardado = New System.Windows.Forms.Button()
+        Me.dtFecha = New System.Windows.Forms.DateTimePicker()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.grdCuentas = New Grilla2.SpeedGrilla()
         Me.grdDatos = New Grilla2.SpeedGrilla()
-        Me.cmdGuardado = New System.Windows.Forms.Button()
+        Me.dtMaxima = New System.Windows.Forms.DateTimePicker()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'cmdLeer
@@ -134,7 +138,7 @@ Partial Class frmLeer
         Me.chAuto.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chAuto.AutoSize = True
         Me.chAuto.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.chAuto.Location = New System.Drawing.Point(1195, 12)
+        Me.chAuto.Location = New System.Drawing.Point(1208, 12)
         Me.chAuto.Name = "chAuto"
         Me.chAuto.Size = New System.Drawing.Size(46, 17)
         Me.chAuto.TabIndex = 6
@@ -154,6 +158,34 @@ Partial Class frmLeer
         Me.cmdCarpeta.TabIndex = 1
         Me.cmdCarpeta.Text = "Carpeta"
         Me.cmdCarpeta.UseVisualStyleBackColor = True
+        '
+        'cmdGuardado
+        '
+        Me.cmdGuardado.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmdGuardado.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.cmdGuardado.Location = New System.Drawing.Point(913, 319)
+        Me.cmdGuardado.Name = "cmdGuardado"
+        Me.cmdGuardado.Size = New System.Drawing.Size(341, 23)
+        Me.cmdGuardado.TabIndex = 1
+        Me.cmdGuardado.UseVisualStyleBackColor = True
+        '
+        'dtFecha
+        '
+        Me.dtFecha.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtFecha.Location = New System.Drawing.Point(913, 293)
+        Me.dtFecha.Name = "dtFecha"
+        Me.dtFecha.Size = New System.Drawing.Size(116, 20)
+        Me.dtFecha.TabIndex = 7
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(910, 274)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(119, 13)
+        Me.Label3.TabIndex = 8
+        Me.Label3.Text = "Fecha mínima de carga"
         '
         'grdCuentas
         '
@@ -187,7 +219,7 @@ Partial Class frmLeer
         Me.grdCuentas.Redraw = True
         Me.grdCuentas.Row = 0
         Me.grdCuentas.Rows = 50
-        Me.grdCuentas.Size = New System.Drawing.Size(458, 277)
+        Me.grdCuentas.Size = New System.Drawing.Size(471, 243)
         Me.grdCuentas.TabIndex = 5
         '
         'grdDatos
@@ -221,25 +253,35 @@ Partial Class frmLeer
         Me.grdDatos.Redraw = True
         Me.grdDatos.Row = 0
         Me.grdDatos.Rows = 50
-        Me.grdDatos.Size = New System.Drawing.Size(756, 635)
+        Me.grdDatos.Size = New System.Drawing.Size(756, 601)
         Me.grdDatos.TabIndex = 0
         '
-        'cmdGuardado
+        'dtMaxima
         '
-        Me.cmdGuardado.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cmdGuardado.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.cmdGuardado.Location = New System.Drawing.Point(913, 319)
-        Me.cmdGuardado.Name = "cmdGuardado"
-        Me.cmdGuardado.Size = New System.Drawing.Size(328, 23)
-        Me.cmdGuardado.TabIndex = 1
-        Me.cmdGuardado.UseVisualStyleBackColor = True
+        Me.dtMaxima.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtMaxima.Location = New System.Drawing.Point(1035, 293)
+        Me.dtMaxima.Name = "dtMaxima"
+        Me.dtMaxima.Size = New System.Drawing.Size(116, 20)
+        Me.dtMaxima.TabIndex = 7
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(1032, 274)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(120, 13)
+        Me.Label4.TabIndex = 8
+        Me.Label4.Text = "Fecha máxima de carga"
         '
         'frmLeer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1253, 659)
+        Me.ClientSize = New System.Drawing.Size(1266, 625)
+        Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.dtMaxima)
+        Me.Controls.Add(Me.dtFecha)
         Me.Controls.Add(Me.chAuto)
         Me.Controls.Add(Me.grdCuentas)
         Me.Controls.Add(Me.lblArchivo)
@@ -276,4 +318,8 @@ Partial Class frmLeer
     Friend WithEvents tiAuto As Timer
     Friend WithEvents cmdCarpeta As Button
     Friend WithEvents cmdGuardado As Button
+    Friend WithEvents dtFecha As DateTimePicker
+    Friend WithEvents Label3 As Label
+    Friend WithEvents dtMaxima As DateTimePicker
+    Friend WithEvents Label4 As Label
 End Class

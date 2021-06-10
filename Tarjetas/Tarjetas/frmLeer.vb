@@ -22,6 +22,9 @@
 
         Dim n() As Integer = {13, 32, 42, 43, 45, 46, 47, 112, 123}
         grdCuentas.TeclasManejadas = n
+
+        dtFecha.Value = Date.Today.AddDays((Date.Today.DayOfWeek + 6) * -1)
+        dtMaxima.Value = dtFecha.Value.AddDays(6)
     End Sub
     Private Sub cmdLeer_Click(sender As Object, e As EventArgs) Handles cmdLeer.Click
         Dim f As New OpenFileDialog()
@@ -129,20 +132,24 @@
 
                     vImporte = nn.Replace(".", ",")
 
-                    Dim dr As DataRow = dt.NewRow
+                    If IsDate(vFecha) Then
+                        Dim d As Date = CDate(vFecha)
+                        If d.Date >= dtFecha.Value.Date And d.Date <= dtMaxima.Value.Date Then
+                            Dim dr As DataRow = dt.NewRow
+                            dr.Item("Fecha") = CDate(vFecha)
+                            If IsNumeric(vLote) Then dr.Item("Lote") = CInt(vLote)
+                            If IsDate(vPago) Then dr.Item("Fecha_Pago") = CDate(vPago)
+                            If IsNumeric(vImporte) Then dr.Item("Importe") = CDbl(vImporte)
+                            If IsNumeric(vComprobante) Then dr.Item("Comprobante") = CInt(vComprobante)
+                            If IsNumeric(vTarjeta) Then dr.Item("Tarjeta") = CInt(vTarjeta)
 
-                    If IsNumeric(vLote) Then dr.Item("Lote") = CInt(vLote)
-                    If IsDate(vPago) Then dr.Item("Fecha_Pago") = CDate(vPago)
-                    If IsNumeric(vImporte) Then dr.Item("Importe") = CDbl(vImporte)
-                    If IsDate(vFecha) Then dr.Item("Fecha") = CDate(vFecha)
-                    If IsNumeric(vComprobante) Then dr.Item("Comprobante") = CInt(vComprobante)
-                    If IsNumeric(vTarjeta) Then dr.Item("Tarjeta") = CInt(vTarjeta)
+                            dr.Item("Id_Tipo") = vTipo
+                            dr.Item("Suc") = CInt(Suc)
+                            dr.Item("Acreditado") = True
 
-                    dr.Item("Id_Tipo") = vTipo
-                    dr.Item("Suc") = CInt(Suc)
-                    dr.Item("Acreditado") = True
-
-                    dt.Rows.Add(dr)
+                            dt.Rows.Add(dr)
+                        End If
+                    End If
                 Next
 
                 grdDatos.MostrarDatos(dt, True, False)
