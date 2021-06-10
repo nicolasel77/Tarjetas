@@ -10,7 +10,7 @@ Public Class Principal
     Private m_user As String = ""
     Private Ruta As String
     Dim SiempreAbr As Boolean = True
-    Private Shared Server As String = "192.168.1.11"
+    Private Shared Server As String = "192.168.5.1"
     Dim res As IAsyncResult
 
     Public Event ErrorEnBases(ByVal ex As Exception, ByVal Donde As String)
@@ -19,11 +19,10 @@ Public Class Principal
 
     Public Permiso As Byte
 
-    Public Sub New(ByVal BaseDeDatos As String, Optional ByVal N_Servidor As String = "192.168.1.11")
+    Public Sub New(ByVal BaseDeDatos As String, Optional ByVal N_Servidor As String = "192.168.5.1")
         Dim b As Boolean
         Do
             Try
-
                 If Server.Length = 0 Then
                     Server = N_Servidor
                 End If
@@ -116,24 +115,6 @@ Public Class Principal
             End SyncLock
         End If
 
-        'Else
-        '    If DB_A.State = ConnectionState.Closed Then
-        '        Try
-        '            DB_A.Open()
-        '        Catch er As OleDb.OleDbException
-        '            RaiseEvent ErrorEnBases(er, "AbrirBase - " & Ruta)
-        '            MsgBox(er.Message, MsgBoxStyle.OkOnly, "AbrirBase " & m_user)
-        '        Catch er As Exception
-        '            MsgBox(er.Message, MsgBoxStyle.OkOnly, "AbrirBase " & m_user)
-        '            RaiseEvent ErrorEnBases(er, "AbrirBase - " & Ruta)
-        '        End Try
-        '    End If
-        '    If DB_A.State = ConnectionState.Executing Then ' se está atorando el sistema
-        '        SyncLock DB_A 'hasta que no obtiene el control exclusivo.....
-        '            If DB_A.State = ConnectionState.Closed Then DB_A.Open() 'no puede abrir la base
-        '        End SyncLock
-        '    End If
-        'End If
     End Sub
 
 
@@ -277,35 +258,11 @@ Public Class Principal
     End Function
 
     Public Function SP_SelectDT(ByVal Sp As String, ByVal ParamArray Params() As Object) As DataTable
-        '        Dim i As Integer
-        '        Dim cm As New SqlClient.SqlCommand()
-        '        Dim dt As New DataTable("Datos")
-        '        AbrirBase()
-
-        '        cm.CommandType = CommandType.StoredProcedure
-        '        cm.CommandText = Sp
-        '        cm.Connection = DB
-        '        SqlClient.SqlCommandBuilder.DeriveParameters(cm)
-        '        For i = 1 To Params.GetUpperBound(0) + 1
-        '            cm.Parameters.Item(i).Value = Params(i - 1)
-        '        Next
-        '        'Return cm
-        '.
-        '        'Dim sqlCon As New SqlConnection (<connection string>)
-        '        Dim sqlAdp As New SqlClient.sq
-        '        Dim sqlCmd As New SqlCommand
-        '        Dim ds As New DataSet
-
-        '        sqlCmd.Connection = sqlCon
-        '        sqlCmd.CommandText = ""
-        '        sqlCmd.CommandType = CommandType.StoredProcedure
-        '        ' Add any parameters to the stored proc here using sqlCmd.Parameters
-
-        '        sqlAdp.SelectCommand = sqlCmd
-        '        sqlAdp.Fill(ds)
         Dim dt As New DataTable("Datos")
         Dim da As SqlClient.SqlDataAdapter
         Dim cm As New SqlClient.SqlCommand()
+
+        AbrirBase()
 
         da = New SqlClient.SqlDataAdapter(Sp, DB)
 

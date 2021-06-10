@@ -368,9 +368,10 @@ Public Class SpeedGrilla
             Grd.DataSource = Nothing
             For i = 0 To Titulos.Columns.Count - 1
                 Cad = Titulos.Columns(i).Caption
-                inicio = Cad.Chars(0)
-                Cad = Titulos.Columns(i).Caption.Remove(0, 1)
-                Cad = Cad.Insert(0, Char.ToUpper(inicio))
+                'inicio = Cad.Chars(0)
+                Cad = $"{Titulos.Columns(i).Caption.Substring(0, 1).ToUpper}{Titulos.Columns(i).Caption.Substring(1)}"
+                'Cad = Titulos.Columns(i).Caption.Replace(0, 1)
+                'Cad = Cad.Insert(0, Char.ToUpper(inicio))
                 Grd.Cols(i).Caption = Cad
             Next
             PrepararGrilla()
@@ -1516,12 +1517,7 @@ Public Class SpeedGrilla
         End Function
         Function C1EditorGetValue() As Object Implements C1.Win.C1FlexGrid.IC1EmbeddedEditor.C1EditorGetValue
             Try
-                If IsNothing(valor) Then
-                    Return Today.Date
-                Else
-                    Return valor.Date
-                End If
-
+                Return valor.Date
             Catch er As Exception
                 'MsgBox(er.Message)
             End Try
